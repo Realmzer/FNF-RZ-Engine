@@ -1,4 +1,4 @@
-package backend;
+package backend.utils;
 
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
@@ -11,6 +11,24 @@ class CoolUtil
 		//trace(snap);
 		return (m / snap);
 	}
+
+	public static function getUsername():String
+		{
+			// uhh this one is self explanatory
+			return Sys.getEnv("USERNAME");
+		}
+	
+		public static function getUserPath():String
+		{
+			// this one is also self explantory
+			return Sys.getEnv("USERPROFILE");
+		}
+	
+		public static function getTempPath():String
+		{
+			// gets appdata temp folder lol
+			return Sys.getEnv("TEMP");
+		}
 
 	inline public static function capitalize(text:String)
 		return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
@@ -99,6 +117,43 @@ class CoolUtil
 		return dumbArray;
 	}
 
+		/**
+	 * Returns a string representation of a size, following this format: `1.02 GB`, `134.00 MB`
+	 * @param size Size to convert to string
+	 * @return String Result string representation
+	 */
+	 public static function getSizeString(size:Float):String {
+		var labels = ["B", "KB", "MB", "GB", "TB"];
+		var rSize:Float = size;
+		var label:Int = 0;
+		while(rSize > 1024 && label < labels.length-1) {
+			label++;
+			rSize /= 1024;
+		}
+		return '${Std.int(rSize) + "." + addZeros(Std.string(Std.int((rSize % 1) * 100)), 2)}${labels[label]}';
+	}
+
+		/**
+	 * Add several zeros at the beginning of a string, so that `2` becomes `02`.
+	 * @param str String to add zeros
+	 * @param num The length required
+	 */
+	 public static inline function addZeros(str:String, num:Int) {
+		while(str.length < num) str = '0${str}';
+		return str;
+	}
+
+	/**
+	 * Add several zeros at the end of a string, so that `2` becomes `20`, useful for ms.
+	 * @param str String to add zeros
+	 * @param num The length required
+	 */
+	public static inline function addEndZeros(str:String, num:Int) {
+		while(str.length < num) str = '${str}0';
+		return str;
+	}
+
+
 	inline public static function browserLoad(site:String) {
 		#if linux
 		Sys.command('/usr/bin/xdg-open', [site]);
@@ -125,6 +180,15 @@ class CoolUtil
 			FlxG.error("Platform is not supported for CoolUtil.openFolder");
 		#end
 	}
+
+	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
+		return Math.max(min, Math.min(max, value));
+	}
+
+	inline public static function clamp(value:Float, min:Float, max:Float):Float {
+		return Math.max(min, Math.min(max, value));
+	}
+
 
 	/**
 		Helper Function to Fix Save Files for Flixel 5

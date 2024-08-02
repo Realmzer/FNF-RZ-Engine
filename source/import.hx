@@ -23,7 +23,8 @@ import js.html.*;
 
 import backend.Paths;
 import backend.Controls;
-import backend.CoolUtil;
+import backend.utils.CoolUtil;
+import backend.utils.*;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;

@@ -142,9 +142,47 @@ class Paths
 		return 'assets/shared/$file';
 	}
 
+	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
+	{
+		return getPath(file, type, library);
+	}
+
 	inline static public function txt(key:String, ?library:String)
 	{
 		return getPath('data/$key.txt', TEXT, library);
+	}
+
+	public static inline function ndll(key:String)
+	{
+	return getPath('ndlls/$key.ndll');
+	}
+
+	inline static public function obj(key:String) {
+		return getPath('models/$key.obj');
+	}
+
+	inline static public function dae(key:String) {
+		return getPath('models/$key.dae');
+	}
+
+	inline static public function md2(key:String) {
+		return getPath('models/$key.md2');
+	}
+
+	inline static public function md5(key:String) {
+		return getPath('models/$key.md5');
+	}
+
+	inline static public function awd(key:String) {
+		return getPath('models/$key.awd');
+	}
+
+	inline static public function ps1(key:String, ?library:String) {
+		return getPath('$key.ps1', library);
+	}
+
+	inline static public function ini(key:String, ?library:String) {
+		return getPath('data/$key.ini', library);
 	}
 
 	inline static public function xml(key:String, ?library:String)

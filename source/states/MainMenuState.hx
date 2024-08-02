@@ -10,7 +10,7 @@ import options.OptionsState;
 class MainMenuState extends MusicBeatState
 {
 	public static var psychEngineVersion:String = '0.7.3'; // This is also used for Discord RPC
-	public static var rzEngineVersion:String = '0.0.1'; // RZ Engine Version
+	public static var rzEngineVersion:String = '0.1'; // RZ Engine Version
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -22,7 +22,6 @@ class MainMenuState extends MusicBeatState
 		#if MODS_ALLOWED 'mods', #end
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		#if !switch 'donate', #end
 		'options'
 	];
 
@@ -150,7 +149,7 @@ class MainMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				if (optionShit[curSelected] == 'donate')
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+					//CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
 				else
 				{
