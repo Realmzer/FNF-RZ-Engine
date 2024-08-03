@@ -1,5 +1,7 @@
 package backend.utils;
 
+//Credits to Codename Engine
+
 #if cpp
 /*
 * Copyright (C)2005-2019 Haxe Foundation

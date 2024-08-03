@@ -549,14 +549,16 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 40);
+				//	createCoolText(['Psych Engine by'], 40);
+					createCoolText(['RZ Engine by'], 40);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				case 4:
 					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 40);
-					addMoreText('Riveren', 40);
+					//addMoreText('Shadow Mario', 40);
+					//addMoreText('Riveren', 40);
+					addMoreText('Realmzer', 40);
 					#else
 					addMoreText('present');
 					#end

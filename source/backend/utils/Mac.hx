@@ -1,5 +1,7 @@
 package backend.utils;
 
+//Credits to Codename Engine
+
 #if mac
 @:cppFileCode("#include <sys/sysctl.h>")
 class Mac {

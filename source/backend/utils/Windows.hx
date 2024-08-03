@@ -1,5 +1,7 @@
 package backend.utils;
 
+//Credits to Codename Engine
+
 #if windows
 import backend.utils.NativeAPI.FileAttribute;
 import backend.utils.NativeAPI.MessageBoxIcon;
@@ -101,32 +103,12 @@ class AudioFixClient : public IMMNotificationClient {
 	{
 		return S_OK;
 	}
-
-	HRESULT STDMETHODCALLTYPE OnDefaultDeviceChanged(
-		EDataFlow flow, ERole role,
-		LPCWSTR pwstrDeviceId)
-	{
-		_hx_system::Main_obj::audioDisconnected = true;
-		return S_OK;
-	};
 };
 
 AudioFixClient *curAudioFix;
 ')
 @:dox(hide)
 class Windows {
-
-	public static var __audioChangeCallback:Void->Void = function() {
-		trace("test");
-	};
-
-
-	@:functionCode('
-	if (!curAudioFix) curAudioFix = new AudioFixClient();
-	')
-	public static function registerAudio() {
-		Main.audioDisconnected = false;
-	}
 
 	@:functionCode('
 		int darkMode = enable ? 1 : 0;

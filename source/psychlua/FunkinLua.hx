@@ -790,6 +790,18 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "precacheMusic", function(name:String) {
 			Paths.music(name);
 		});
+		Lua_helper.add_callback(lua, "precacheVideo", function(name:String) {
+			Paths.video(name);
+		});
+		Lua_helper.add_callback(lua, "precacheFragShader", function(name:String) {
+			Paths.shaderFragment(name);
+		});
+		Lua_helper.add_callback(lua, "precacheVertexShader", function(name:String) {
+			Paths.shaderVertex(name);
+		});
+		Lua_helper.add_callback(lua, "precacheObj", function(name:String) {
+			Paths.obj(name);
+		});
 
 		// others
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
@@ -1454,6 +1466,22 @@ class FunkinLua {
 				}
 			}
 		});
+
+		Lua_helper.add_callback(lua, "trace", LuaUtils.trace); // Btw this only works when using the terminal to compile
+
+		Lua_helper.add_callback(lua, "getSongInfo", LuaUtils.getSongInfo);
+
+		Lua_helper.add_callback(lua, "getRatingShit", LuaUtils.getRatingShit);
+
+		Lua_helper.add_callback(lua, "showErrorWindow", LuaUtils.showErrorWindow);
+
+		Lua_helper.add_callback(lua, "pauseAudio", LuaUtils.pauseAudio);
+
+		Lua_helper.add_callback(lua, "deleteFile", LuaUtils.deleteFile);
+
+		Lua_helper.add_callback(lua, "openPage", LuaUtils.openPage);
+
+
 		#if FLX_PITCH
 		Lua_helper.add_callback(lua, "getSoundPitch", function(tag:String) {
 			if(tag != null && tag.length > 0 && game.modchartSounds.exists(tag)) {

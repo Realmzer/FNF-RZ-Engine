@@ -1,9 +1,11 @@
-package funkin.backend.system.macros;
+package backend.system.macros;
 
 #if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
 #end
+
+// Credits to Codename Engine 
 
 class Utils {
 	macro public static function generateReflectionLike(totalArguments:Int, funcName:String, argsName:String) {

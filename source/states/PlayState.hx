@@ -267,7 +267,6 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
-		Paths.clearStoredMemory();
 
 		startCallback = startCountdown;
 		endCallback = endSong;
@@ -287,6 +286,12 @@ class PlayState extends MusicBeatState
 
 		if(FlxG.sound.music != null)
 			FlxG.sound.music.stop();
+
+		inline Paths.clearStoredMemory();
+
+		#if sys
+		openfl.system.System.gc();
+		#end
 
 		// Gameplay settings
 		healthGain = ClientPrefs.getGameplaySetting('healthgain');

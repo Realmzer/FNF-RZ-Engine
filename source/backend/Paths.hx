@@ -17,6 +17,14 @@ import flash.media.Sound;
 
 import haxe.Json;
 
+#if cpp
+import cpp.vm.Gc;
+#elseif hl
+import hl.Gc;
+#elseif neko
+import neko.vm.Gc;
+#end
+
 
 #if MODS_ALLOWED
 import backend.Mods;
@@ -56,9 +64,31 @@ class Paths
 		}
 
 		// run the garbage collector for good measure lmfao
-		System.gc();
+		compress();
+		gc(true); // OG code is System.gc();
 	}
 
+	@:noCompletion private inline static function _gc(major:Bool) {
+		#if (cpp || neko)
+		Gc.run(major);
+		#elseif hl
+		Gc.major();
+		#end
+	}
+
+	@:noCompletion public inline static function compress() {
+		#if cpp
+		Gc.compact();
+		#elseif hl
+		Gc.major();
+		#elseif neko
+		Gc.run(true);
+		#end
+	}
+
+	public inline static function gc(major:Bool = false, repeat:Int = 1) {
+		while(repeat-- > 0) _gc(major);
+	}
 	// define the locally tracked assets
 	public static var localTrackedAssets:Array<String> = [];
 	public static function clearStoredMemory() {
@@ -87,6 +117,8 @@ class Paths
 		// flags everything to be cleared out next unused memory clear
 		localTrackedAssets = [];
 		#if !html5 openfl.Assets.cache.clear("songs"); #end
+		gc(true);
+		compress();
 	}
 
 	static public var currentLevel:String;

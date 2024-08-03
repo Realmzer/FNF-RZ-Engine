@@ -21,10 +21,9 @@ import sys.io.*;
 import js.html.*;
 #end
 
+// Backend Stuff
 import backend.Paths;
 import backend.Controls;
-import backend.utils.CoolUtil;
-import backend.utils.*;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;
@@ -33,6 +32,27 @@ import backend.Conductor;
 import backend.BaseStage;
 import backend.Difficulty;
 import backend.Mods;
+
+// Backend Utils
+import backend.utils.CppAPI;
+import backend.utils.CoolUtil;
+import backend.utils.FileAttributeWrapper;
+import backend.utils.HiddenProcess;
+import backend.utils.IniUtil;
+import backend.utils.Linux;
+import backend.utils.Mac;
+import backend.utils.MemoryUtil;
+import backend.utils.NativeAPI;
+import backend.utils.NdllUtil;
+import backend.utils.Transparency;
+import backend.utils.Wallpaper;
+import backend.utils.Windows;
+import backend.utils.WindowsData;
+import backend.utils.WindowsSystem;
+
+// System
+import backend.system.CommandLineHandler;
+import backend.system.macros.Utils;
 
 import objects.Alphabet;
 import objects.BGSprite;

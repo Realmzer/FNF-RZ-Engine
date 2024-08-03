@@ -255,6 +255,81 @@ class LuaUtils
 		}
 	}
 
+	public static function deleteFile(path:String):Void {
+		FileSystem.deleteFile(path);
+	}
+
+	public static function openPage(url:String):Void {
+		#if linux
+		Sys.command('/usr/bin/xdg-open', [url]);
+		#else
+		FlxG.openURL(url);
+		#end
+	}
+
+
+	public static function trace(text:String)
+	{
+		trace(text);
+	}
+
+	public static function getSongInfo(curSong:String):Void {
+		trace(StringTools.trim(PlayState.SONG.song) + " - " + StringTools.trim(Difficulty.getString()) + ", Duration: " + FlxG.sound.music.length);
+	}
+
+	public static function getRatingShit(curSong:String):Void {
+		var songScore = PlayState.instance.songScore;
+		var misses = PlayState.instance.songMisses;
+		var rating = PlayState.instance.ratingName;
+		var isFullCombo = PlayState.instance.ratingFC;
+		var isFC = false;
+
+		if (PlayState.instance.ratingFC == 'FC') {
+			isFC = true;
+		} else if (PlayState.instance.ratingFC == 'GFC') {
+			isFC = true;  
+		} else if (PlayState.instance.ratingFC == 'SFC') {
+			isFC = true;
+		} else {
+			isFC = false;
+		}
+	
+		trace("Score: " + songScore + " Misses: " + misses + " Rating: " + rating + " Is FC?: " + isFC);
+	}
+
+	public static function showErrorWindow(message:String, errTitle:String = "An error has occured.") {
+		lime.app.Application.current.window.alert(message, errTitle);
+	}
+
+	public static function pauseAudio(vocals:Bool = null, oppVocals:Bool = null, music:Bool = null):Void {
+		if (vocals == null) vocals = true;
+		if (oppVocals == null) oppVocals = true;
+		if (music == null) music = true;
+	
+		if (vocals) {
+			if (PlayState.instance.vocals.playing) {
+				PlayState.instance.vocals.pause();
+			} else {
+				PlayState.instance.vocals.resume();
+			}
+		}
+		if (oppVocals) {
+			if (PlayState.instance.opponentVocals.playing) {
+				PlayState.instance.opponentVocals.pause();
+			} else {
+				PlayState.instance.opponentVocals.resume();
+			}
+		}
+		if (music) {
+			if (FlxG.sound.music.playing) {
+				FlxG.sound.music.pause();
+			} else {
+				FlxG.sound.music.resume();
+			}
+		}
+	}
+
+
 	inline public static function getTextObject(name:String):FlxText
 	{
 		return #if LUA_ALLOWED PlayState.instance.modchartTexts.exists(name) ? PlayState.instance.modchartTexts.get(name) : #end Reflect.getProperty(PlayState.instance, name);
@@ -265,6 +340,7 @@ class LuaUtils
 		for (type in types)
 		{
 			if(Std.isOfType(value, type)) return true;
+	
 		}
 		return false;
 	}

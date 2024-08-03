@@ -1,10 +1,12 @@
 package backend.utils;
 
+//Credits to Codename Engine
+
 /**
  * DOESNT SUPPORT CATEGORIES YET!!
  */
  class IniUtil {
-	public static inline function parseAsset(assetPath:String, ?defaultVariables:Map<String, String>)
+/*	public static inline function parseAsset(assetPath:String, ?defaultVariables:Map<String, String>)
 		return parseString(Assets.getText(assetPath), defaultVariables);
 
 	public static function parseString(data:String, ?defaultVariables:Map<String, String>) {
@@ -35,5 +37,5 @@ package backend.utils;
 			finalMap[name] = value;
 		}
 		return finalMap;
+	}*/
 	}
-}

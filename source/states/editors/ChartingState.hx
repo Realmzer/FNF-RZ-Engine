@@ -3152,6 +3152,7 @@ class ChartingState extends MusicBeatState
 
 	private function saveLevel()
 	{
+		Paths.gc(true);
 		if(_song.events != null && _song.events.length > 1) _song.events.sort(sortByTime);
 		var json = {
 			"song": _song
@@ -3167,6 +3168,7 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + ".json");
 		}
+		cpp.vm.Gc.enable(true);
 	}
 
 	function sortByTime(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int

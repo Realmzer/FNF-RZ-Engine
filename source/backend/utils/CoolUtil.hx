@@ -5,6 +5,22 @@ import lime.utils.Assets as LimeAssets;
 
 class CoolUtil
 {
+
+	inline public static function scale(x:Float, l1:Float, h1:Float, l2:Float, h2:Float):Float
+		return ((x - l1) * (h2 - l2) / (h1 - l1) + l2);
+
+	public static function rotate(x:Float, y:Float, angle:Float, ?point:FlxPoint):FlxPoint
+		{
+			var p = point == null ? FlxPoint.weak() : point;
+			p.set((x * Math.cos(angle)) - (y * Math.sin(angle)), (x * Math.sin(angle)) + (y * Math.cos(angle)));
+			return p;
+		}
+	
+
+	inline public static function quantizeAlpha(f:Float, interval:Float){
+		return Std.int((f+interval/2)/interval)*interval;
+	}
+
 	inline public static function quantize(f:Float, snap:Float){
 		// changed so this actually works lol
 		var m:Float = Math.fround(f * snap);
@@ -29,6 +45,33 @@ class CoolUtil
 			// gets appdata temp folder lol
 			return Sys.getEnv("TEMP");
 		}
+
+		public static function generateTextFile(fileContent:String, fileName:String):Void
+			{
+				#if desktop
+				final path = CoolUtil.getTempPath() + "/" + fileName + ".txt";
+		
+				File.saveContent(path, fileContent);
+				#end
+		
+				#if windows
+				Sys.command("start " + path);
+				#elseif linux
+				Sys.command("xdg-open " + path);
+				#else
+				Sys.command("open " + path);
+				#end
+			}
+		
+			public static function executableFileName()
+				{
+					#if windows
+					var programPath = Sys.programPath().split("\\");
+					#else
+					var programPath = Sys.programPath().split("/");
+					#end
+					return programPath[programPath.length - 1];
+				}
 
 	inline public static function capitalize(text:String)
 		return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
@@ -189,6 +232,8 @@ class CoolUtil
 		return Math.max(min, Math.min(max, value));
 	}
 
+	
+
 
 	/**
 		Helper Function to Fix Save Files for Flixel 5
@@ -205,6 +250,14 @@ class CoolUtil
 		// #if (flixel < "5.0.0") return company; #else
 		return '${company}/${flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
 		// #end
+	}
+
+	public static function precacheSound(sound:String, ?library:String = null):Void {
+		Paths.sound(sound, library);
+	}
+
+	public static function precacheMusic(sound:String, ?library:String = null):Void {
+		Paths.music(sound, library);
 	}
 
 	public static function setTextBorderFromString(text:FlxText, border:String)

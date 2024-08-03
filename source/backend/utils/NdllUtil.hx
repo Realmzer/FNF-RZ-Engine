@@ -2,6 +2,8 @@ package backend.utils;
 
 import lime.app.Application;
 
+//Credits to Codename Engine
+
 /**
  * Small util that allows you to load any function from ndlls via `getFunction`.
  *
@@ -43,7 +45,7 @@ class NdllUtil {
 			//return Reflect.callMethod(null, func, a); // wouldnt work for some reason, maybe cause like c++ functions doesnt have reflection enabled
 		});
 		#else
-		trace('NDLLs are not supported on this platform.', WARNING);
+		trace('NDLLs are not supported on this platform.');
 		return noop;
 		#end
 	}
@@ -58,18 +60,18 @@ class NdllUtil {
 	public static function getFunctionFromPath(ndll:String, name:String, args:Int):Dynamic {
 		#if NDLLS_SUPPORTED
 		if (!Assets.exists(ndll)) {
-			trace('Couldn\'t find ndll at ${ndll}.', WARNING);
+			trace('Couldn\'t find ndll at ${ndll}.');
 			return noop;
 		}
 		var func = lime.system.CFFI.load(Assets.getPath(ndll), name, args);
 
 		if (func == null) {
-			trace('Method ${name} in ndll ${ndll} with ${args} args was not found.', ERROR);
+			trace('Method ${name} in ndll ${ndll} with ${args} args was not found.');
 			return noop;
 		}
 		return func;
 		#else
-		trace('NDLLs are not supported on this platform.', WARNING);
+		trace('NDLLs are not supported on this platform.');
 		#end
 		return noop;
 	}

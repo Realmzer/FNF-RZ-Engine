@@ -1,5 +1,7 @@
 package backend.utils;
 
+//Credits to Codename Engine
+
 #if linux
 @:cppFileCode("#include <stdio.h>")
 class Linux {

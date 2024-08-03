@@ -6,17 +6,13 @@ import backend.utils.Mac;
 import flixel.util.typeLimit.OneOfTwo;
 import flixel.util.typeLimit.OneOfThree;
 
+//Credits to Codename Engine
+
 /**
  * Class for functions that talk to a lower level than haxe, such as message boxes, and more.
  * Some functions might not have effect on some platforms.
  */
 class NativeAPI {
-	@:dox(hide) public static function registerAudio() {
-		#if windows
-		Windows.registerAudio();
-		#end
-	}
-
 	@:dox(hide) public static function registerAsDPICompatible() {
 		#if windows
 		Windows.registerAsDPICompatible();

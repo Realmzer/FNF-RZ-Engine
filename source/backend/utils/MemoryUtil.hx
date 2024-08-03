@@ -14,6 +14,8 @@ import openfl.system.System;
 
 using StringTools;
 
+//Credits to Codename Engine
+
 class MemoryUtil {
 	public static var disableCount:Int = 0;
 
