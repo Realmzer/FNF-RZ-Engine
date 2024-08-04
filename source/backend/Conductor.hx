@@ -17,6 +17,7 @@ class Conductor
 	public static var bpm(default, set):Float = 100;
 	public static var crochet:Float = ((60 / bpm) * 1000); // beats in milliseconds
 	public static var stepCrochet:Float = crochet / 4; // steps in milliseconds
+	public static var timeScale:Float = Conductor.safeZoneOffset / 180; //max hit window should be 180 right?
 	public static var songPosition:Float = 0;
 	public static var offset:Float = 0;
 
@@ -34,6 +35,14 @@ class Conductor
 
 		return data[data.length - 1];
 	}
+
+
+	public static function recalculateTimings()
+		{
+			Conductor.safeZoneOffset = Math.floor((ClientPrefs.data.safeFrames / 60) * 1000);
+			Conductor.timeScale = Conductor.safeZoneOffset / 180;
+		}
+	
 
 	public static function getCrotchetAtTime(time:Float){
 		var lastChange = getBPMFromSeconds(time);

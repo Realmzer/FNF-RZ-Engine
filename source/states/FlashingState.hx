@@ -18,7 +18,7 @@ class FlashingState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
-		warnText = new FlxText(0, 0, FlxG.width,
+		warnText = new FlxText(-500, 250, FlxG.width,
 			"Hey, watch out!\n
 			This Mod contains some flashing lights!\n
 			Press ENTER to disable them now or go to Options Menu.\n
@@ -26,8 +26,10 @@ class FlashingState extends MusicBeatState
 			You've been warned!",
 			32);
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
-		warnText.screenCenter(Y);
+	//	warnText.screenCenter(Y);
 		add(warnText);
+		warnText.alpha = 0;
+		FlxTween.tween(warnText, { x: 0, alpha: 1}, 1.5, {ease: FlxEase.elasticInOut});
 	}
 
 	override function update(elapsed:Float)

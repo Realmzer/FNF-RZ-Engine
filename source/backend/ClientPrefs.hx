@@ -75,6 +75,12 @@ import states.TitleState;
 	public var safeFrames:Float = 10;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
+
+	public var smoothBar:Bool = true;
+	public var noratings:Bool = false;
+	public var nosplashes:Bool = false;
+	public var oppstrumstatic:Bool = false;
+	public var playerstrumstatic:Bool = false;
 }
 
 class ClientPrefs {

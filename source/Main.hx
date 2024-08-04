@@ -57,6 +57,11 @@ class Main extends Sprite
 	public static function main():Void
 	{
 		Lib.current.addChild(new Main());
+		#if cpp
+		cpp.NativeGc.enable(true);
+		#elseif hl
+		hl.Gc.enable(true);
+		#end
 	}
 
 	public function new()
@@ -66,7 +71,9 @@ class Main extends Sprite
 		#if windows //DPI AWARENESS BABY
 		@:functionCode('
 		#include <Windows.h>
-		SetProcessDPIAware()
+		#include <winuser.h>
+		setProcessDPIAware() // allows for more crisp visuals
+		DisableProcessWindowsGhosting() // lets you move the window and such if its not responding
 		')
 		#end
 
