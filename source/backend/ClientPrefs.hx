@@ -38,6 +38,7 @@ import states.TitleState;
 
 	public var ghostTapping:Bool = true;
 	public var timeBarType:String = 'Time Left';
+	//public var hudType:String = 'Psych Engine';
 	public var scoreZoom:Bool = true;
 	public var noReset:Bool = false;
 	public var healthBarAlpha:Float = 1;
@@ -75,6 +76,12 @@ import states.TitleState;
 	public var safeFrames:Float = 10;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
+	
+	public var smoothBar:Bool = true;
+	public var noratings:Bool = false;
+	public var nosplashes:Bool = false;
+	public var oppstrumstatic:Bool = false;
+	public var playerstrumstatic:Bool = false;
 }
 
 class ClientPrefs {

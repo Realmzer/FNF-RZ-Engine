@@ -1008,6 +1008,18 @@ class FunkinLua {
 			game.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
+
+	//	Lua_helper.add_callback(lua, "makeLuaGif", function(tag:String, ?image:String = null, ?x:Float = 0, ?y:Float = 0) {
+		//	tag = tag.replace('.', '');
+	//		LuaUtils.resetSpriteTag(tag);
+	//		var leSprite:FlxGifSprite = new ModchartSprite(x, y);
+	//		if(image != null && image.length > 0)
+	//		{
+		//		leSprite.loadGif(Paths.image(image));
+	//		}
+	//		leSprite.active = true;
+	//	});
+
 		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, ?image:String = null, ?x:Float = 0, ?y:Float = 0, ?spriteType:String = "sparrow") {
 			tag = tag.replace('.', '');
 			LuaUtils.resetSpriteTag(tag);

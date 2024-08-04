@@ -64,6 +64,13 @@ import states.LoadingState;
 import flxanimate.*;
 #end
 
+#if flxgif
+import flxgif.*;
+#end
+
+// Psych UI
+import backend.ui.*;
+
 //Flixel
 import flixel.sound.FlxSound;
 import flixel.FlxG;
