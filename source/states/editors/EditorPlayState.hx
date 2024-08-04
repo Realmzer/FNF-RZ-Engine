@@ -18,7 +18,6 @@ import haxe.Json;
 import objects.Character;
 import openfl.utils.Assets as OpenFlAssets;
 
-
 class EditorPlayState extends MusicBeatSubstate
 {
 	// Borrowed from original PlayState
@@ -107,19 +106,12 @@ class EditorPlayState extends MusicBeatSubstate
 		/**** NOTES ****/
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
-
-		if(ClientPrefs.data.nosplashes)
-		{
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
-		}
-
-		if(ClientPrefs.data.nosplashes)
-			{
+		
 		var splash:NoteSplash = new NoteSplash(100, 100);
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.000001; //cant make it invisible or it won't allow precaching
-			}
 
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
@@ -551,7 +543,7 @@ class EditorPlayState extends MusicBeatSubstate
 		note.rating = daRating.name;
 		score = daRating.score;
 
-		if(daRating.noteSplash && !note.noteSplashData.disabled && !ClientPrefs.data.nosplashes)
+		if(daRating.noteSplash && !note.noteSplashData.disabled)
 			spawnNoteSplashOnNote(note);
 
 		if(!note.ratingDisabled)
@@ -564,7 +556,6 @@ class EditorPlayState extends MusicBeatSubstate
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
 
-		if(!ClientPrefs.data.noratings) {
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -685,7 +676,6 @@ class EditorPlayState extends MusicBeatSubstate
 			startDelay: Conductor.crochet * 0.002 / playbackRate
 		});
 	}
-	}
 
 	private function onKeyPress(event:KeyboardEvent):Void
 	{
@@ -747,14 +737,11 @@ class EditorPlayState extends MusicBeatSubstate
 		Conductor.songPosition = lastTime;
 
 		var spr:StrumNote = playerStrums.members[key];
-		if(!ClientPrefs.data.oppstrumstatic)
-		{
 		if(spr != null && spr.animation.curAnim.name != 'confirm')
 		{
 			spr.playAnim('pressed');
 			spr.resetAnim = 0;
 		}
-	}
 	}
 
 	private function onKeyRelease(event:KeyboardEvent):Void
@@ -832,12 +819,9 @@ class EditorPlayState extends MusicBeatSubstate
 
 		var strum:StrumNote = opponentStrums.members[Std.int(Math.abs(note.noteData))];
 		if(strum != null) {
-			if(!ClientPrefs.data.oppstrumstatic)
-			{
 			strum.playAnim('confirm', true);
 			strum.resetAnim = Conductor.stepCrochet * 1.25 / 1000 / playbackRate;
 		}
-	}
 		note.hitByOpponent = true;
 
 		if (!note.isSustainNote)
@@ -854,7 +838,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if(note.hitCausesMiss) {
 			noteMiss(note);
-			if(!note.noteSplashData.disabled && !note.isSustainNote && !ClientPrefs.data.nosplashes)
+			if(!note.noteSplashData.disabled && !note.isSustainNote)
 				spawnNoteSplashOnNote(note);
 
 			if (!note.isSustainNote)
@@ -869,11 +853,8 @@ class EditorPlayState extends MusicBeatSubstate
 			popUpScore(note);
 		}
 
-		if(!ClientPrefs.data.oppstrumstatic)
-		{
 		var spr:StrumNote = playerStrums.members[note.noteData];
 		if(spr != null) spr.playAnim('confirm', true);
-		}
 		vocals.volume = 1;
 
 		if (!note.isSustainNote)

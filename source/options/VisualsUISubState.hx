@@ -60,20 +60,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			addOption(option);
 		}
 
-		var option:Option = new Option('Hud Type:',
-		"What should the hud look like?",
-		'hudType',
-		'string',
-		['Psych Engine', 'Vanilla']);
-		//addOption(option);
-		
-		var option:Option = new Option('Score Text Style:',
-		"What should the score text look like?",
-		'scoreTxtStyle',
-		'string',
-		['Psych Engine', 'Vanilla']);
-		//addOption(option);
-
 		var option:Option = new Option('Note Splash Opacity',
 			'How much transparent should the Note Splashes be.',
 			'splashAlpha',
@@ -126,12 +112,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
-
-		var option:Option = new Option('Smooth Health Bar',
-			"If checked, it makes the health bar smooth.",
-			'smoothBar',
-			'bool');
-			addOption(option);
 		
 		#if !mobile
 		var option:Option = new Option('FPS Counter',
