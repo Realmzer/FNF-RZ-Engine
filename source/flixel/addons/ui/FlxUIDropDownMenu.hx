@@ -364,6 +364,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 			Std.int(header.background.height), [[1, 1, 3, 3], [1, 1, 3, 3], [1, 1, 3, 3]], FlxUI9SliceSprite.TILE_NONE);
 		t.labelOffsets[FlxButton.PRESSED].y -= 1; // turn off the 1-pixel depress on click
 
+	//	t.color = 0xFF313435;
 		t.up_color = FlxColor.BLACK;
 		t.over_color = FlxColor.WHITE;
 		t.down_color = FlxColor.WHITE;

@@ -62,6 +62,7 @@ import states.LoadingState;
 
 #if flxanimate
 import flxanimate.*;
+//import flxanimate.PsychFlxAnimate as FlxAnimate;
 #end
 
 //Flixel
@@ -78,6 +79,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.addons.transition.FlxTransitionableState;
+
 
 using StringTools;
 #end

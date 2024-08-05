@@ -93,15 +93,19 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxelib name="flixel" />
+	<haxelib name="flixel" version="5.6.1"/>
 	<haxelib name="flixel-ui" />
-	<haxelib name="flixel-addons" />
-	<haxelib name="tjson" />
+	<haxelib name="flixel-addons" version="3.2.2"/>
+	<haxelib name="tjson" version="1.4.0"/>
+
+	<haxelib name="grig.audio"/>
+	<haxelib name="funkin.vis"/>
 
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
+<!--	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/> -->
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
 
@@ -152,8 +156,7 @@
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
-	
-	
+
 	<!--Disable deprecated warnings-->
 	<haxedef name='no-deprecation-warnings' />
 

@@ -35,7 +35,7 @@ class Prompt extends MusicBeatSubstate
 		theText = promptText;
 		goAnyway = acceptOnDefault;
 		
-		var op1 = 'OK';
+		var op1 = 'YES';
 		var op2 = 'CANCEL';
 		
 		if (option1 != null) op1 = option1;
@@ -44,6 +44,9 @@ class Prompt extends MusicBeatSubstate
 		close();} );
 		buttonNo = new FlxButton(633.3,450,op2,function(){if(cancelc != null)cancelc();
 		close();});
+
+		buttonAccept.label.color = 0xFFFFFF;
+		buttonNo.label.color = 0xFFFFFF;
 		super();	
 	}
 	
@@ -59,7 +62,7 @@ class Prompt extends MusicBeatSubstate
 		}else{
 		panel = new FlxSprite(0, 0);
 		panelbg = new FlxSprite(0, 0);
-		makeSelectorGraphic(panel,300,150,0xff999999);
+		makeSelectorGraphic(panel,300,150,0xff000000);
 		makeSelectorGraphic(panelbg,304,154,0xff000000);
 		//panel.makeGraphic(300, 150, 0xff999999);
 		//panel.loadGraphic(Paths.image('ui/promptbg'));
@@ -74,13 +77,16 @@ class Prompt extends MusicBeatSubstate
 		panelbg.scrollFactor.set();
 		panelbg.screenCenter();
 		
-		add(panelbg);
+		//add(panelbg);
 		add(panel);
+		panel.alpha = 0.75;
 		add(buttonAccept);
 		add(buttonNo);
 		//add(buttons);
-		var textshit:FlxText = new FlxText(buttonNo.width*2, panel.y, 300, theText, 16);
+		var textshit:FlxText = new FlxText(buttonNo.width*2, panel.y, 250, theText, 16);
 		textshit.alignment = 'center';
+		textshit.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		textshit.borderSize = 1;
 		add(textshit);
 		textshit.screenCenter();
 		buttonAccept.screenCenter();
@@ -92,7 +98,7 @@ class Prompt extends MusicBeatSubstate
 		textshit.scrollFactor.set();
 		}
 	}
-	/*
+	
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
@@ -112,10 +118,10 @@ class Prompt extends MusicBeatSubstate
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 			//buttons.animation.play('but' + selected);
 		}
-		buttonAccept.color.brightness = 0.5;
-		buttonNo.color.brightness = 0.5;
-		if (selected == 0 ) buttonAccept.color.brightness = 0.9;
-		if (selected == 1 ) buttonNo.color.brightness = 0.9;
+		buttonAccept.color = 0xff030503;
+		buttonNo.color = 0xfff70000;
+		if (selected == 0 ) buttonAccept.color = 0xff259942;
+		if (selected == 1 ) buttonNo.color = 0xffb60404;
 		if (controls.ACCEPT ){
 			if (selected == 0){
 				FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -129,7 +135,7 @@ class Prompt extends MusicBeatSubstate
 		
 		}
 	}
-	*/
+	
 	
 	function makeSelectorGraphic(panel:FlxSprite,w,h,color:FlxColor)
 	{

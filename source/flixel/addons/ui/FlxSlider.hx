@@ -335,6 +335,7 @@ class FlxSlider extends FlxSpriteGroup
 
 		// Finally, update the valueLabel
 		valueLabel.text = Std.string(FlxMath.roundDecimal(value, decimals));
+	//	valueLabel.color = 0xFFFFFFFF;
 
 		super.update(elapsed);
 	}

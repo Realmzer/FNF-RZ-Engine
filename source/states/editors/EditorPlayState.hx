@@ -108,7 +108,7 @@ class EditorPlayState extends MusicBeatSubstate
 		/**** NOTES ****/
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
-		if(ClientPrefs.data.nosplashes)
+		if(!ClientPrefs.data.nosplashes)
 			{
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
@@ -552,8 +552,10 @@ class EditorPlayState extends MusicBeatSubstate
 		note.rating = daRating.name;
 		score = daRating.score;
 
-		if(daRating.noteSplash && !note.noteSplashData.disabled && !ClientPrefs.data.nosplashes)
+
+		if(daRating.noteSplash && !note.noteSplashData.disabled)
 			spawnNoteSplashOnNote(note);
+	
 
 		if(!note.ratingDisabled)
 		{
@@ -947,7 +949,7 @@ class EditorPlayState extends MusicBeatSubstate
 	function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, note);
-		if(ClientPrefs.data.nosplashes)
+		if(!ClientPrefs.data.nosplashes)
 			{
 		grpNoteSplashes.add(splash);
 			}

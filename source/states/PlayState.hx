@@ -2981,15 +2981,13 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if(!cpuControlled)
-		{
-			var spr = playerStrums.members[note.noteData];
-			if(!ClientPrefs.data.playerstrumstatic)
+		if(!ClientPrefs.data.playerstrumstatic)
 			{
+			var spr = playerStrums.members[note.noteData];
 			if(spr != null) spr.playAnim('confirm', true);
-		}
-	}
+		
 		else strumPlayAnim(false, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
+			}
 		vocals.volume = 1;
 
 		if (!note.isSustainNote)

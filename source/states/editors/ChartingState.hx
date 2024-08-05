@@ -10,6 +10,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIInputText;
+import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIDropDownMenu;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUISlider;
@@ -146,6 +147,8 @@ class ChartingState extends MusicBeatState
 
 	var zoomTxt:FlxText;
 
+	var infoBG:FlxSprite;
+
 	var zoomList:Array<Float> = [
 		0.25,
 		0.5,
@@ -223,8 +226,12 @@ class ChartingState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.scrollFactor.set();
-		bg.color = 0xFF222222;
+		bg.color = 0xFF301a55;
 		add(bg);
+
+		infoBG = new FlxSprite(6, 800).makeGraphic(1, 200, 0xFF000000);
+		infoBG.alpha = 0.6;
+		add(infoBG);
 
 		gridLayer = new FlxTypedGroup<FlxSprite>();
 		add(gridLayer);
@@ -321,6 +328,7 @@ class ChartingState extends MusicBeatState
 		UI_box.x = 640 + GRID_SIZE / 2;
 		UI_box.y = 25;
 		UI_box.scrollFactor.set();
+	//	UI_box.color = 0xFF3d3f41;
 
 		text =
 		"W/S or Mouse Wheel - Change Conductor's strum time
@@ -344,7 +352,7 @@ class ChartingState extends MusicBeatState
 		for (i in 0...tipTextArray.length) {
 			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
 			tipText.y += i * 12;
-			tipText.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+			tipText.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
 			add(tipText);
@@ -366,6 +374,7 @@ class ChartingState extends MusicBeatState
 		add(curRenderedNoteType);
 		add(nextRenderedSustains);
 		add(nextRenderedNotes);
+		
 
 		if(lastSong != currentSongName) {
 			changeSection();
@@ -392,9 +401,13 @@ class ChartingState extends MusicBeatState
 	#if FLX_PITCH
 	var sliderRate:FlxUISlider;
 	#end
+	var songSlider:FlxUISlider;
 	function addSongUI():Void
 	{
 		UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
+	//	UI_songTitle.backgroundColor = 0xFF313435;
+	//	UI_songTitle.color = 0xFFFFFFFF;
+	//	UI_songTitle.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(UI_songTitle);
 
 		var check_voices = new FlxUICheckBox(10, 25, null, null, "Has voice track", 100);
@@ -405,11 +418,14 @@ class ChartingState extends MusicBeatState
 			_song.needsVoices = check_voices.checked;
 			//trace('CHECKED!');
 		};
+		//check_voices.color = 0xff313435;
 
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()
 		{
 			saveLevel();
 		});
+		//saveButton.color = 0xff313435;
+		//saveButton.label.color = 0xffffffff;
 
 		var reloadSong:FlxButton = new FlxButton(saveButton.x + 90, saveButton.y, "Reload Audio", function()
 		{
@@ -418,6 +434,8 @@ class ChartingState extends MusicBeatState
 			loadSong();
 			updateWaveform();
 		});
+		//reloadSong.color = 0xff313435;
+		//reloadSong.label.color = 0xffffffff;
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
@@ -426,12 +444,16 @@ class ChartingState extends MusicBeatState
 			},
 			null, ignoreWarnings));
 		});
+		//reloadSongJson.color = 0xff313435;
+		//reloadSongJson.label.color = 0xffffffff;
 
 		var loadAutosaveBtn:FlxButton = new FlxButton(reloadSongJson.x, reloadSongJson.y + 30, 'Load Autosave', function()
 		{
 			PlayState.SONG = Song.parseJSONshit(FlxG.save.data.autosave);
 			MusicBeatState.resetState();
 		});
+		//loadAutosaveBtn.color = 0xff313435;
+		//loadAutosaveBtn.label.color = 0xffffffff;
 
 		var loadEventJson:FlxButton = new FlxButton(loadAutosaveBtn.x, loadAutosaveBtn.y + 30, 'Load Events', function()
 		{
@@ -450,11 +472,15 @@ class ChartingState extends MusicBeatState
 				changeSection(curSec);
 			}
 		});
+		//loadEventJson.color = 0xff313435;
+		//loadEventJson.label.color = 0xffffffff;
 
 		var saveEvents:FlxButton = new FlxButton(110, reloadSongJson.y, 'Save Events', function ()
 		{
 			saveEvents();
 		});
+		//saveEvents.color = 0xff313435;
+		//saveEvents.label.color = 0xffffffff;
 
 		var clear_events:FlxButton = new FlxButton(320, 310, 'Clear events', function()
 			{
@@ -479,6 +505,7 @@ class ChartingState extends MusicBeatState
 		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
 		blockPressWhileTypingOnStepper.push(stepperBPM);
+	//	stepperBPM.color = 0xff313435;
 
 		var stepperSpeed:FlxUINumericStepper = new FlxUINumericStepper(10, stepperBPM.y + 35, 0.1, 1, 0.1, 10, 2);
 		stepperSpeed.value = _song.speed;
@@ -491,6 +518,7 @@ class ChartingState extends MusicBeatState
 		#else
 		var directories:Array<String> = [Paths.getSharedPath('characters/')];
 		#end
+	//	stepperSpeed.color = 0xff313435;
 
 		var tempArray:Array<String> = [];
 		var characters:Array<String> = Mods.mergeAllTextsNamed('data/characterList.txt', Paths.getSharedPath());
@@ -526,6 +554,9 @@ class ChartingState extends MusicBeatState
 			updateHeads();
 		});
 		player1DropDown.selectedLabel = _song.player1;
+	//	player1DropDown.header.text.color = 0xFFFFFFFF;
+	//	player1DropDown.header.color = 0xFF313435;
+	//	player1DropDown.header.text.color = 0xFFFFFFFF;
 		blockPressWhileScrolling.push(player1DropDown);
 
 		var gfVersionDropDown = new FlxUIDropDownMenu(player1DropDown.x, player1DropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
@@ -535,6 +566,8 @@ class ChartingState extends MusicBeatState
 			updateHeads();
 		});
 		gfVersionDropDown.selectedLabel = _song.gfVersion;
+		//gfVersionDropDown.header.color = 0xFF313435;
+		//gfVersionDropDown.header.text.color = 0xFFFFFFFF;
 		blockPressWhileScrolling.push(gfVersionDropDown);
 
 		var player2DropDown = new FlxUIDropDownMenu(player1DropDown.x, gfVersionDropDown.y + 40, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
@@ -544,6 +577,8 @@ class ChartingState extends MusicBeatState
 			updateHeads();
 		});
 		player2DropDown.selectedLabel = _song.player2;
+		//player2DropDown.header.color = 0xFF313435;
+		//player2DropDown.header.text.color = 0xFFFFFFFF;
 		blockPressWhileScrolling.push(player2DropDown);
 
 		#if MODS_ALLOWED
@@ -587,6 +622,8 @@ class ChartingState extends MusicBeatState
 			_song.stage = stages[Std.parseInt(character)];
 		});
 		stageDropDown.selectedLabel = _song.stage;
+	//	stageDropDown.header.color = 0xFF313435;
+		//stageDropDown.header.text.color = 0xFFFFFFFF;
 		blockPressWhileScrolling.push(stageDropDown);
 
 		var tab_group_song = new FlxUI(null, UI_box);
@@ -653,6 +690,7 @@ class ChartingState extends MusicBeatState
 		stepperBeats.name = 'section_beats';
 		blockPressWhileTypingOnStepper.push(stepperBeats);
 		check_altAnim.name = 'check_altAnim';
+		//stepperBeats.color = 0xff313435;
 
 		check_changeBPM = new FlxUICheckBox(10, stepperBeats.y + 30, null, null, 'Change BPM', 100);
 		check_changeBPM.checked = _song.notes[curSec].changeBPM;
@@ -665,6 +703,7 @@ class ChartingState extends MusicBeatState
 			stepperSectionBPM.value = Conductor.bpm;
 		}
 		stepperSectionBPM.name = 'section_bpm';
+		//stepperSectionBPM.color = 0xff313435;
 		blockPressWhileTypingOnStepper.push(stepperSectionBPM);
 
 		var check_eventsSec:FlxUICheckBox = null;
@@ -696,6 +735,8 @@ class ChartingState extends MusicBeatState
 				}
 			}
 		});
+	//	copyButton.color = 0xff313435;
+	//	copyButton.label.color = 0xffffffff;
 
 		var pasteButton:FlxButton = new FlxButton(copyButton.x + 100, copyButton.y, "Paste Section", function()
 		{
@@ -739,6 +780,8 @@ class ChartingState extends MusicBeatState
 			}
 			updateGrid();
 		});
+	//	pasteButton.color = 0xff313435;
+	//	pasteButton.label.color = 0xffffffff;
 
 		var clearSectionButton:FlxButton = new FlxButton(pasteButton.x + 100, pasteButton.y, "Clear", function()
 		{
@@ -764,8 +807,8 @@ class ChartingState extends MusicBeatState
 			updateGrid();
 			updateNoteUI();
 		});
-		clearSectionButton.color = FlxColor.RED;
-		clearSectionButton.label.color = FlxColor.WHITE;
+	//	clearSectionButton.color = FlxColor.RED;
+	//	clearSectionButton.label.color = FlxColor.WHITE;
 		
 		check_notesSec = new FlxUICheckBox(10, clearSectionButton.y + 25, null, null, "Notes", 100);
 		check_notesSec.checked = true;
@@ -782,6 +825,8 @@ class ChartingState extends MusicBeatState
 			}
 			updateGrid();
 		});
+	//	swapSection.color = 0xff313435;
+	//	swapSection.label.color = 0xffffffff;
 
 		var stepperCopy:FlxUINumericStepper = null;
 		var copyLastButton:FlxButton = new FlxButton(10, swapSection.y + 30, "Copy last section", function()
@@ -818,10 +863,13 @@ class ChartingState extends MusicBeatState
 			}
 			updateGrid();
 		});
+	//	copyLastButton.color = 0xff313435;
+	//	copyLastButton.label.color = 0xffffffff;
 		copyLastButton.setGraphicSize(80, 30);
 		copyLastButton.updateHitbox();
 		
 		stepperCopy = new FlxUINumericStepper(copyLastButton.x + 100, copyLastButton.y, 1, 1, -999, 999, 0);
+	//	stepperCopy.color = 0xff313435;
 		blockPressWhileTypingOnStepper.push(stepperCopy);
 
 		var duetButton:FlxButton = new FlxButton(10, copyLastButton.y + 45, "Duet Notes", function()
@@ -847,6 +895,8 @@ class ChartingState extends MusicBeatState
 
 			updateGrid();
 		});
+	//	duetButton.color = 0xff313435;
+	//	duetButton.label.color = 0xffffffff;
 		var mirrorButton:FlxButton = new FlxButton(duetButton.x + 100, duetButton.y, "Mirror Notes", function()
 		{
 			var duetNotes:Array<Array<Dynamic>> = [];
@@ -868,6 +918,8 @@ class ChartingState extends MusicBeatState
 
 			updateGrid();
 		});
+	//	mirrorButton.color = 0xff313435;
+	//	mirrorButton.label.color = 0xffffffff;
 
 		tab_group_section.add(new FlxText(stepperBeats.x, stepperBeats.y - 15, 0, 'Beats per Section:'));
 		tab_group_section.add(stepperBeats);
@@ -902,10 +954,15 @@ class ChartingState extends MusicBeatState
 
 		stepperSusLength = new FlxUINumericStepper(10, 25, Conductor.stepCrochet / 2, 0, 0, Conductor.stepCrochet * 64);
 		stepperSusLength.value = 0;
+		//stepperSusLength.backgroundColor = 0xFF313435;
+	//	stepperSusLength.color = 0xff313435;
 		stepperSusLength.name = 'note_susLength';
 		blockPressWhileTypingOnStepper.push(stepperSusLength);
 
 		strumTimeInputText = new FlxUIInputText(10, 65, 180, "0");
+		//strumTimeInputText.backgroundColor = 0xFF313435;
+		//strumTimeInputText.color = 0xFFFFFFFF;
+	//	strumTimeInputText.caretColor = 0xFFFFFFFF;
 		tab_group_note.add(strumTimeInputText);
 		blockPressWhileTypingOn.push(strumTimeInputText);
 
@@ -950,6 +1007,8 @@ class ChartingState extends MusicBeatState
 				updateGrid();
 			}
 		});
+		//noteTypeDropDown.header.color = 0xFF313435;
+	//	noteTypeDropDown.header.text.color = 0xFFFFFFFF;
 		blockPressWhileScrolling.push(noteTypeDropDown);
 
 		tab_group_note.add(new FlxText(10, 10, 0, 'Sustain length:'));
@@ -1020,16 +1079,24 @@ class ChartingState extends MusicBeatState
 				updateGrid();
 			}
 		});
+		//eventDropDown.header.color = 0xFF313435;
+		//eventDropDown.header.text.color = 0xFFFFFFFF;
 		blockPressWhileScrolling.push(eventDropDown);
 
 		var text:FlxText = new FlxText(20, 90, 0, "Value 1:");
 		tab_group_event.add(text);
 		value1InputText = new FlxUIInputText(20, 110, 100, "");
+		//value1InputText.backgroundColor = 0xFF313435;
+		//value1InputText.color = 0xFFFFFFFF;
+		//value1InputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(value1InputText);
 
 		var text:FlxText = new FlxText(20, 130, 0, "Value 2:");
 		tab_group_event.add(text);
 		value2InputText = new FlxUIInputText(20, 150, 100, "");
+		//value2InputText.backgroundColor = 0xFF313435;
+		//value2InputText.color = 0xFFFFFFFF;
+		//value2InputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(value2InputText);
 
 		// New event buttons
@@ -1089,7 +1156,9 @@ class ChartingState extends MusicBeatState
 		});
 		moveLeftButton.setGraphicSize(Std.int(addButton.width), Std.int(addButton.height));
 		moveLeftButton.updateHitbox();
-		moveLeftButton.label.size = 12;
+	//	moveLeftButton.label.size = 12;
+	//	moveLeftButton.color = 0xff313435;
+	//	moveLeftButton.label.color = 0xffffffff;
 		setAllLabelsOffset(moveLeftButton, -30, 0);
 		tab_group_event.add(moveLeftButton);
 
@@ -1099,7 +1168,9 @@ class ChartingState extends MusicBeatState
 		});
 		moveRightButton.setGraphicSize(Std.int(moveLeftButton.width), Std.int(moveLeftButton.height));
 		moveRightButton.updateHitbox();
-		moveRightButton.label.size = 12;
+		//moveRightButton.label.size = 12;
+	//	moveRightButton.color = 0xff313435;
+	//	moveRightButton.label.color = 0xffffffff;
 		setAllLabelsOffset(moveRightButton, -30, 0);
 		tab_group_event.add(moveRightButton);
 
@@ -1286,6 +1357,8 @@ class ChartingState extends MusicBeatState
 
 		metronomeStepper = new FlxUINumericStepper(15, 55, 5, _song.bpm, 1, 1500, 1);
 		metronomeOffsetStepper = new FlxUINumericStepper(metronomeStepper.x + 100, metronomeStepper.y, 25, 0, 0, 1000, 1);
+	//	metronomeStepper.color = 0xff313435;
+	//	metronomeOffsetStepper.color = 0xff313435;
 		blockPressWhileTypingOnStepper.push(metronomeStepper);
 		blockPressWhileTypingOnStepper.push(metronomeOffsetStepper);
 
@@ -1300,16 +1373,19 @@ class ChartingState extends MusicBeatState
 		instVolume = new FlxUINumericStepper(metronomeStepper.x, 250, 0.1, 1, 0, 1, 1);
 		instVolume.value = FlxG.sound.music.volume;
 		instVolume.name = 'inst_volume';
+		//instVolume.color = 0xff313435;
 		blockPressWhileTypingOnStepper.push(instVolume);
 
 		voicesVolume = new FlxUINumericStepper(instVolume.x + 100, instVolume.y, 0.1, 1, 0, 1, 1);
 		voicesVolume.value = vocals.volume;
 		voicesVolume.name = 'voices_volume';
+		//voicesVolume.color = 0xff313435;
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 
 		voicesOppVolume = new FlxUINumericStepper(instVolume.x + 200, instVolume.y, 0.1, 1, 0, 1, 1);
 		voicesOppVolume.value = vocals.volume;
 		voicesOppVolume.name = 'voices_opp_volume';
+	//	voicesOppVolume.color = 0xff313435;
 		blockPressWhileTypingOnStepper.push(voicesOppVolume);
 		
 		#if FLX_PITCH
@@ -1359,15 +1435,27 @@ class ChartingState extends MusicBeatState
 
 		//
 		gameOverCharacterInputText = new FlxUIInputText(10, 25, 150, _song.gameOverChar != null ? _song.gameOverChar : '', 8);
+	//	gameOverCharacterInputText.backgroundColor = 0xFF313435;
+	//	gameOverCharacterInputText.color = 0xFFFFFFFF;
+	//	gameOverCharacterInputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(gameOverCharacterInputText);
 		
 		gameOverSoundInputText = new FlxUIInputText(10, gameOverCharacterInputText.y + 35, 150, _song.gameOverSound != null ? _song.gameOverSound : '', 8);
+	//	gameOverSoundInputText.backgroundColor = 0xFF313435;
+	//	gameOverSoundInputText.color = 0xFFFFFFFF;
+	//	gameOverSoundInputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(gameOverSoundInputText);
 		
 		gameOverLoopInputText = new FlxUIInputText(10, gameOverSoundInputText.y + 35, 150, _song.gameOverLoop != null ? _song.gameOverLoop : '', 8);
+	//	gameOverLoopInputText.backgroundColor = 0xFF313435;
+	//	gameOverLoopInputText.color = 0xFFFFFFFF;
+	//	gameOverLoopInputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(gameOverLoopInputText);
 		
 		gameOverEndInputText = new FlxUIInputText(10, gameOverLoopInputText.y + 35, 150, _song.gameOverEnd != null ? _song.gameOverEnd : '', 8);
+	//	gameOverEndInputText.backgroundColor = 0xFF313435;
+	//	gameOverEndInputText.color = 0xFFFFFFFF;
+	//	gameOverEndInputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(gameOverEndInputText);
 		//
 
@@ -1382,15 +1470,23 @@ class ChartingState extends MusicBeatState
 
 		//
 		noteSkinInputText = new FlxUIInputText(10, 280, 150, _song.arrowSkin != null ? _song.arrowSkin : '', 8);
+	//	noteSkinInputText.backgroundColor = 0xFF313435;
+	//	noteSkinInputText.color = 0xFFFFFFFF;
+	//	noteSkinInputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(noteSkinInputText);
 
 		noteSplashesInputText = new FlxUIInputText(noteSkinInputText.x, noteSkinInputText.y + 35, 150, _song.splashSkin != null ? _song.splashSkin : '', 8);
+	//	noteSplashesInputText.backgroundColor = 0xFF313435;
+	//	noteSplashesInputText.color = 0xFFFFFFFF;
+	//	noteSplashesInputText.caretColor = 0xFFFFFFFF;
 		blockPressWhileTypingOn.push(noteSplashesInputText);
 
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
 			updateGrid();
 		});
+		//reloadNotesButton.color = 0xFF313435;
+		//reloadNotesButton.label.color = 0xffffffff;
 		//
 		
 		tab_group_data.add(gameOverCharacterInputText);
@@ -1801,6 +1897,9 @@ class ChartingState extends MusicBeatState
 			for (stepper in blockPressWhileTypingOnStepper) {
 				@:privateAccess
 				var leText:FlxUIInputText = cast (stepper.text_field, FlxUIInputText);
+			//	leText.backgroundColor = 0xFF313435;
+			//	leText.color = 0xFFFFFFFF;
+			//	leText.caretColor = 0xFFFFFFFF;
 				if(leText.hasFocus) {
 					ClientPrefs.toggleVolumeKeys(false);
 					blockInput = true;
@@ -2153,7 +2252,7 @@ class ChartingState extends MusicBeatState
 		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
 		"\nSection: " + curSec +
 		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
-		"\n\nStep: " + curStep +
+		"\n\nStep: " + Std.string(curStep).substring(0,4) +
 		"\n\nBeat Snap: " + quantization + "th";
 
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
