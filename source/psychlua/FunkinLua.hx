@@ -1467,7 +1467,7 @@ class FunkinLua {
 			}
 		});
 
-		Lua_helper.add_callback(lua, "trace", LuaUtils.trace); // Btw this only works when using the terminal to compile
+		Lua_helper.add_callback(lua, "cmdtrace", LuaUtils.cmdtrace); // Btw this only works when using the terminal to compile
 
 		Lua_helper.add_callback(lua, "getSongInfo", LuaUtils.getSongInfo);
 
@@ -1481,6 +1481,7 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "openPage", LuaUtils.openPage);
 
+		Lua_helper.add_callback(lua, "windowName", LuaUtils.windowName);
 
 		#if FLX_PITCH
 		Lua_helper.add_callback(lua, "getSoundPitch", function(tag:String) {

@@ -14,6 +14,30 @@ import llua.Lua;
 import backend.Achievements;
 #end
 
+//Mobile Controls
+/*import mobile.objects.MobileControls;
+import mobile.objects.Hitbox;
+import mobile.objects.TouchPad;
+import mobile.input.MobileInputID;
+import mobile.backend.MobileData;
+import mobile.backend.StorageUtil;
+import mobile.backend.SwipeUtil;
+
+import mobile.flixel.input.FlxMobileInputManager;
+import mobile.flixel.input.FlxMobileInputID;
+
+//Android
+#if android
+import android.content.Context as AndroidContext;
+import android.widget.Toast as AndroidToast;
+import android.os.Environment as AndroidEnvironment;
+import android.Permissions as AndroidPermissions;
+import android.Settings as AndroidSettings;
+import android.Tools as AndroidTools;
+import android.os.BatteryManager as AndroidBatteryManager;
+#end
+*/
+
 #if sys
 import sys.*;
 import sys.io.*;

@@ -1,161 +1,135 @@
-package backend;
-#if funkin.vis 
-import funkin.vis._internal.html5.AnalyzerNode;
-import funkin.vis.audioclip.frontends.LimeAudioClip;
-import funkin.vis.dsp.SpectralAnalyzer;
-import funkin.vis.dsp.RecentPeakFinder;
-import grig.audio.FFT;
-import grig.audio.FFTVisualization;
-import lime.media.AudioSource;
+package states.stages.objects;
 
-using grig.audio.lime.UInt8ArrayTools;
-#end
+import backend.SpectralAnalyzerEx;
 
-class SpectralAnalyzerEx #if funkin.vis extends SpectralAnalyzer #end
+class ABotSpeaker extends FlxSpriteGroup
 {
-	#if funkin.vis
-	var _levels:Array<Bar> = [];
-	public function recycledLevels():Array<Bar>
+	final VIZ_MAX = 7; //ranges from viz1 to viz7
+	final VIZ_POS_X:Array<Float> = [0, 59, 56, 66, 54, 52, 51];
+	final VIZ_POS_Y:Array<Float> = [0, -8, -3.5, -0.4, 0.5, 4.7, 7];
+
+	public var bg:FlxSprite;
+	public var vizSprites:Array<FlxSprite> = [];
+	public var eyeBg:FlxSprite;
+	public var eyes:FlxAnimate;
+	public var speaker:FlxAnimate;
+
+	var analyzer:SpectralAnalyzerEx;
+	var volumes:Array<Float> = [];
+
+	public var snd(default, set):FlxSound;
+	function set_snd(changed:FlxSound)
 	{
-		#if web
-		var amplitudes:Array<Float> = htmlAnalyzer.getFloatFrequencyData();
+		snd = changed;
+		initAnalyzer();
+		return snd;
+	}
 
-		for (i in 0...bars.length) {
-			var bar = bars[i];
-			var binLo = bar.binLo;
-			var binHi = bar.binHi;
+	public function new(x:Float = 0, y:Float = 0)
+	{
+		super(x, y);
 
-			var value:Float = minDb;
-			for (j in (binLo + 1)...(binHi)) {
-				value = Math.max(value, amplitudes[Std.int(j)]);
-			}
+		var antialias = ClientPrefs.data.antialiasing;
 
-			// this isn't for clamping, it's to get a value
-			// between 0 and 1!
-			value = normalizedB(value);
-			bar.recentValues.push(value);
-			var recentPeak = bar.recentValues.peak;
+		bg = new FlxSprite(90, 20).loadGraphic(Paths.image('abot/stereoBG'));
+		bg.antialiasing = antialias;
+		add(bg);
 
-			if(_levels[i] != null)
-			{
-				_levels[i].value = value;
-				_levels[i].peak = recentPeak;
-			}
-			else _levels.push({value: value, peak: recentPeak});
-		}
-
-		return _levels;
-		#else
-		var numOctets = Std.int(audioSource.buffer.bitsPerSample / 8);
-		var wantedLength = fftN * numOctets * audioSource.buffer.channels;
-		var startFrame = audioClip.currentFrame;
-		startFrame -= startFrame % numOctets;
-		var segment = audioSource.buffer.data.subarray(startFrame, min(startFrame + wantedLength, audioSource.buffer.data.length));
-		var signal = recycledInterleaved(segment, audioSource.buffer.bitsPerSample);
-
-		if (audioSource.buffer.channels > 1)
+		var vizX:Float = 0;
+		var vizY:Float = 0;
+		var vizFrames = Paths.getSparrowAtlas('abot/aBotViz');
+		for (i in 1...VIZ_MAX+1)
 		{
-			var mixed = [];
-			mixed.resize(Std.int(signal.length / audioSource.buffer.channels));
-			for (i in 0...mixed.length)
-			{
-				mixed[i] = 0.0;
-				for (c in 0...audioSource.buffer.channels)
-					mixed[i] += 0.7 * signal[i*audioSource.buffer.channels+c];
-
-				mixed[i] *= blackmanWindow[i];
-			}
-			signal = mixed;
+			volumes.push(0.0);
+			vizX += VIZ_POS_X[i-1];
+			vizY += VIZ_POS_Y[i-1];
+			var viz:FlxSprite = new FlxSprite(vizX + 140, vizY + 74);
+			viz.frames = vizFrames;
+			viz.animation.addByPrefix('VIZ', 'viz$i', 0);
+			viz.animation.play('VIZ', true);
+			viz.animation.curAnim.finish(); //make it go to the lowest point
+			viz.antialiasing = antialias;
+			vizSprites.push(viz);
+			viz.updateHitbox();
+			viz.centerOffsets();
+			add(viz);
 		}
 
-		var range = 16;
-		var freqs = fft.calcFreq(signal);
-		var bars = vis.makeLogGraph(freqs, barCount, Math.floor(maxDb - minDb), range);
+		eyeBg = new FlxSprite(-30, 215).makeGraphic(1, 1, FlxColor.WHITE);
+		eyeBg.scale.set(160, 60);
+		eyeBg.updateHitbox();
+		add(eyeBg);
 
-		if (bars.length > barHistories.length)
-			barHistories.resize(bars.length);
+		eyes = new FlxAnimate(-10, 230);
+		Paths.loadAnimateAtlas(eyes, 'abot/systemEyes');
+		eyes.anim.addBySymbolIndices('lookleft', 'a bot eyes lookin', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], 24, false);
+		eyes.anim.addBySymbolIndices('lookright', 'a bot eyes lookin', [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35], 24, false);
+		eyes.anim.play('lookright', true);
+		eyes.anim.curFrame = eyes.anim.length - 1;
+		add(eyes);
 
-		_levels.resize(bars.length);
-		for (i in 0...bars.length)
+		speaker = new FlxAnimate(-65, -10);
+		Paths.loadAnimateAtlas(speaker, 'abot/abotSystem');
+		speaker.anim.addBySymbol('anim', 'Abot System', 24, false);
+		speaker.anim.play('anim', true);
+		speaker.anim.curFrame = speaker.anim.length - 1;
+		speaker.antialiasing = antialias;
+		add(speaker);
+	}
+
+	var levelMax:Int = 0;
+	override function update(elapsed:Float):Void
+	{
+		super.update(elapsed);
+		if(analyzer == null) return;
+
+		//var levels = analyzer.getLevels(); //this has a memory leak, so i made my own function for it
+		var levels = analyzer.recycledLevels();
+		var oldLevelMax = levelMax;
+		levelMax = 0;
+		for (i in 0...Std.int(Math.min(vizSprites.length, levels.length)))
 		{
-			if (barHistories[i] == null)
-			{
-				barHistories[i] = new RecentPeakFinder();
-				trace('created barHistories[$i]');
-			}
-			var recentValues = barHistories[i];
-			var value = bars[i] / range;
-
-			// slew limiting
-			var lastValue = recentValues.lastValue;
-			if (maxDelta > 0.0)
-			{
-				var delta = clamp(value - lastValue, -1 * maxDelta, maxDelta);
-				value = lastValue + delta;
-			}
-			recentValues.push(value);
-
-			var recentPeak = recentValues.peak;
-
-			if(_levels[i] != null)
-			{
-				_levels[i].value = value;
-				_levels[i].peak = recentPeak;
-			}
-			else _levels[i] = {value: value, peak: recentPeak};
+			var animFrame:Int = Math.round(levels[i].value * 5);
+			animFrame = Std.int(Math.abs(FlxMath.bound(animFrame, 0, 5) - 5)); // shitty dumbass flip, cuz dave got da shit backwards lol!
+		
+			vizSprites[i].animation.curAnim.curFrame = animFrame;
+			levelMax = Std.int(Math.max(levelMax, 5 - animFrame));
 		}
-		return _levels;
+
+		if(levelMax >= 4)
+		{
+			//trace(levelMax);
+			if(oldLevelMax <= levelMax && (levelMax >= 5 || speaker.anim.curFrame >= 3))
+				beatHit();
+		}
+	}
+
+	public function beatHit()
+	{
+		speaker.anim.play('anim', true);
+	}
+
+	public function initAnalyzer()
+	{
+		@:privateAccess
+		analyzer = new SpectralAnalyzerEx(snd._channel.__audioSource, 7, 0.1, 40);
+	
+		#if desktop
+		// On desktop it uses FFT stuff that isn't as optimized as the direct browser stuff we use on HTML5
+		// So we want to manually change it!
+		analyzer.fftN = 256;
 		#end
 	}
 
-	var _buffer:Array<Float> = [];
-	function recycledInterleaved(data:lime.utils.UInt8Array, bitsPerSample:Int):Array<Float>
+	var lookingAtRight:Bool = true;
+	public function lookLeft()
 	{
-		switch(bitsPerSample)
-		{
-			case 8:
-				_buffer.resize(data.length);
-				for (i in 0...data.length)
-					_buffer[i] = data[i] / 128.0;
-
-			case 16:
-				_buffer.resize(Std.int(data.length / 2));
-				for (i in 0..._buffer.length)
-					_buffer[i] = data.getInt16(i * 2) / 32767.0;
-
-			case 24:
-				_buffer.resize(Std.int(data.length / 3));
-				for (i in 0..._buffer.length)
-					_buffer[i] = data.getInt24(i * 3) / 8388607.0;
-
-			case 32:
-				_buffer.resize(Std.int(data.length / 4));
-				for (i in 0..._buffer.length)
-					_buffer[i] = data.getInt32(i * 4) / 2147483647.0;
-
-			default: trace('Unknown integer audio format');
-		}
-		return _buffer;
+		if(lookingAtRight) eyes.anim.play('lookleft', true);
+		lookingAtRight = false;
 	}
-
-	@:generic
-	static inline function min<T:Float>(x:T, y:T):T
+	public function lookRight()
 	{
-		return x > y ? y : x;
+		if(!lookingAtRight) eyes.anim.play('lookright', true);
+		lookingAtRight = true;
 	}
-	
-	@:generic
-	static inline function clamp<T:Float>(val:T, min:T, max:T):T
-	{
-		return val <= min ? min : val >= max ? max : val;
-	}
-	#else
-	//Just to avoid errors until they review my PR
-	public var fftN:Int = 0;
-	public function new(?v1:Dynamic, ?v2:Dynamic, ?v3:Dynamic, ?v4:Dynamic) {}
-	public function recycledLevels():Array<Dynamic>
-	{
-		return [{value: 0, peak: 0}];
-	}
-	#end
 }

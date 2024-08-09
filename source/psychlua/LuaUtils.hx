@@ -268,7 +268,7 @@ class LuaUtils
 	}
 
 
-	public static function trace(text:String)
+	public static function cmdtrace(text:String)
 	{
 		trace(text);
 	}
@@ -300,6 +300,13 @@ class LuaUtils
 	public static function showErrorWindow(message:String, errTitle:String = "An error has occured.") {
 		lime.app.Application.current.window.alert(message, errTitle);
 	}
+
+	public static function windowName(name:String) 
+	{
+		openfl.Lib.application.window.title = name;
+	}
+
+	
 
 	public static function pauseAudio(vocals:Bool = null, oppVocals:Bool = null, music:Bool = null):Void {
 		if (vocals == null) vocals = true;

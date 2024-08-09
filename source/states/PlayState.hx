@@ -1659,7 +1659,7 @@ class PlayState extends MusicBeatState
 		setOnScripts('curDecStep', curDecStep);
 		setOnScripts('curDecBeat', curDecBeat);
 
-		if(botplayTxt != null && botplayTxt.visible) {
+		if(botplayTxt != null && botplayTxt.visible && !ClientPrefs.data.staticCpuTxt) {
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
@@ -2981,13 +2981,12 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if(!ClientPrefs.data.playerstrumstatic)
+		if(!cpuControlled && !ClientPrefs.data.playerstrumstatic)
 			{
-			var spr = playerStrums.members[note.noteData];
-			if(spr != null) spr.playAnim('confirm', true);
-		
-		else strumPlayAnim(false, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
+				var spr = playerStrums.members[note.noteData];
+				if(spr != null) spr.playAnim('confirm', true);
 			}
+		else strumPlayAnim(false, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
 		vocals.volume = 1;
 
 		if (!note.isSustainNote)
@@ -3388,13 +3387,16 @@ class PlayState extends MusicBeatState
 	function strumPlayAnim(isDad:Bool, id:Int, time:Float) {
 		var spr:StrumNote = null;
 		if(isDad) {
+			if(!ClientPrefs.data.oppstrumstatic){
 			spr = opponentStrums.members[id];
+			}
 		} else {
+			if(!ClientPrefs.data.playerstrumstatic){		
 			spr = playerStrums.members[id];
 		}
+		}
 
-		if(!ClientPrefs.data.oppstrumstatic)
-		{
+		if(!ClientPrefs.data.playerstrumstatic){	
 		if(spr != null) {
 			spr.playAnim('confirm', true);
 			spr.resetAnim = time;

@@ -5,7 +5,7 @@ import android.content.Context;
 #end
 
 import debug.FPSCounter;
-
+import backend.Highscore;
 import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -17,6 +17,13 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
+//import mobile.backend.MobileScaleMode;
+import openfl.events.KeyboardEvent;
+import lime.system.System as LimeSystem;
+//import mobile.objects.MobileControls;
+#if mobile
+//import mobile.states.CopyState;
+#end
 
 #if linux
 import lime.graphics.Image;
@@ -27,6 +34,10 @@ import lime.graphics.Image;
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
+#end
+
+#if desktop
+import cpp.vm.Gc;
 #end
 
 #if linux
@@ -52,36 +63,46 @@ class Main extends Sprite
 
 	public static var noTerminalColor:Bool = false;
 
+	public static final platform:String = #if mobile "Phones" #else "PCs" #end;
+
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
 	{
+		 #if cpp
+		 cpp.NativeGc.enable(true);
+		 #elseif hl
+		 hl.Gc.enable(true);
+		 #end
 		Lib.current.addChild(new Main());
-		#if cpp
-		cpp.NativeGc.enable(true);
-		#elseif hl
-		hl.Gc.enable(true);
-		#end
 	}
 
 	public function new()
 	{
 		super();
+		#if mobile
+		#if android
+		//StorageUtil.requestPermissions();
+		#end
+		Sys.setCwd(StorageUtil.getStorageDirectory());
+		#end
+
 
 		#if windows //DPI AWARENESS BABY
-		@:functionCode('
+		@:functionCode("
 		#include <Windows.h>
 		#include <winuser.h>
-		setProcessDPIAware() // allows for more crisp visuals
-		DisableProcessWindowsGhosting() // lets you move the window and such if its not responding
-		')
+		SetProcessDPIAware() // allows for more crisp visuals
+		DisableProcessWindowsGhosting() // lets you move the window and such if it's not responding
+		")
 		#end
 
 		#if (DARK_MODE_WINDOW && !macro && windows)
 		CppAPI.darkMode();
 		#end
 
- 
+			trace('Game Successfully Started!');
+
 		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
 		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
@@ -132,6 +153,7 @@ class Main extends Sprite
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
+
 		#if !mobile
 		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
@@ -151,6 +173,14 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
+
+		FlxG.game.focusLostFramerate = #if mobile 30 #else 60 #end;
+		#if web
+		FlxG.keys.preventDefaultKeys.push(TAB);
+		#else
+		FlxG.keys.preventDefaultKeys = [TAB];
+		#end
+
 		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
@@ -159,7 +189,14 @@ class Main extends Sprite
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
 		#end
+		//MobileControls.initSave();
 
+		#if android FlxG.android.preventDefaultKeys = [BACK]; #end
+
+		#if mobile
+	//	LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver; 		
+	//	FlxG.scaleMode = new MobileScaleMode();
+		#end
 		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {
 		     if (FlxG.cameras != null) {
@@ -173,6 +210,8 @@ class Main extends Sprite
 			resetSpriteCache(FlxG.game);
 		});
 	}
+
+	
 
 	static function resetSpriteCache(sprite:Sprite):Void {
 		@:privateAccess {
@@ -190,11 +229,12 @@ class Main extends Sprite
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
+		var operatingSys:String = Sys.systemName();
 
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "./crash/" + "RZEngine_" + dateNow + ".txt";
+		path = "./crashlog/" + "RealmEngine_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{
@@ -207,10 +247,10 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/Realmzer/FNF-RZ-Engine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/Realmzer/FNF-RealmEngine\n\n> Crash Handler written by: sqirra-rng \nDate: " + dateNow + "\nOS: " + operatingSys;
 
-		if (!FileSystem.exists("./crash/"))
-			FileSystem.createDirectory("./crash/");
+		if (!FileSystem.exists("./crashlog/"))
+			FileSystem.createDirectory("./crashlog/");
 
 		File.saveContent(path, errMsg + "\n");
 

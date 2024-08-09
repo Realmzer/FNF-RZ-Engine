@@ -318,7 +318,7 @@ class Paths
 			if(retVal != null) return retVal;
 		}
 
-		trace('oh no its returning null NOOOO ($file)');
+		trace('Returned null ($file)');
 		return null;
 	}
 
@@ -674,17 +674,29 @@ class Paths
 		//trace(animationJson);
 		spr.loadAtlasEx(folderOrImg, spriteJson, animationJson);
 	}
-
-	/*private static function getContentFromFile(path:String):String
-	{
-		var onAssets:Bool = false;
-		var path:String = Paths.getPath(path, TEXT, true);
-		if(FileSystem.exists(path) || (onAssets = true && Assets.exists(path, TEXT)))
-		{
-			//trace('Found text: $path');
-			return !onAssets ? File.getContent(path) : Assets.getText(path);
-		}
-		return null;
-	}*/
 	#end
+
+
+	
+	public static function readDirectory(directory:String):Array<String>
+		{
+			#if MODS_ALLOWED
+			return FileSystem.readDirectory(directory);
+			#else
+			var dirs:Array<String> = [];
+			for(dir in Assets.list().filter(folder -> folder.startsWith(directory)))
+			{
+				@:privateAccess
+				for(library in lime.utils.Assets.libraries.keys())
+				{
+					if(library != 'default' && Assets.exists('$library:$dir') && (!dirs.contains('$library:$dir') || !dirs.contains(dir)))
+						dirs.push('$library:$dir');
+					else if(Assets.exists(dir) && !dirs.contains(dir))
+						dirs.push(dir);
+				}
+			}
+			return dirs;
+			#end
+		}
+
 }

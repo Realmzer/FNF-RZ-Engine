@@ -76,6 +76,12 @@ class VisualsUISubState extends BaseOptionsMenu
 			'hideHud',
 			'bool');
 		addOption(option);
+
+		var option:Option = new Option('Static Botplay Text',
+			'If checked, makes it so the botplay text doesnt pulse.',
+			'staticCpuTxt',
+			'bool');
+		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",

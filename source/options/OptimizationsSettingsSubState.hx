@@ -15,7 +15,7 @@ class OptimizationsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Disable Ratings', //No more Combos
-		"If checked, it disables the ratings that popup \n when presing a note. \n Kind of ruins the optimization of the engine :/.",
+		"If checked, it disables the ratings that popup \n when pressing a note.",
 		'noratings',
 		'bool');
 		addOption(option);

@@ -12,6 +12,7 @@ class MainMenuState extends MusicBeatState
 	public static var psychEngineVersion:String = '0.7.3'; // This is also used for Discord RPC
 	public static var rzEngineVersion:String = '0.1'; // RZ Engine Version
 	public static var curSelected:Int = 0;
+	var allowMouse:Bool = true; //Turn this off to block mouse movement in menus
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
