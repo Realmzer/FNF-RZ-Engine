@@ -28,6 +28,22 @@ class CoolUtil
 		return (m / snap);
 	}
 
+	public static function camLerpShit(ratio:Float)
+		{
+			return FlxG.elapsed / (1 / 60) * ratio;
+		}
+
+	public static function coolLerp(a:Float, b:Float, ratio:Float)
+		{
+			return a + camLerpShit(ratio) * (b - a);
+		}
+		
+		public static function getWindowTitle():String {
+			@:privateAccess var attributes = lime.app.Application.current.window.__attributes;
+			return Reflect.hasField(attributes, "title") ? attributes.title : "Lime Application";
+		}
+	
+
 	public static function getUsername():String
 		{
 			// uhh this one is self explanatory

@@ -14,6 +14,7 @@ haxelib install SScript
 haxelib install hxCodec
 haxelib install tjson 1.4.0
 haxelib install markdown
+haxelib install UnRAR
 haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git
 haxelib git hscript-improved https://github.com/FNF-CNE-Devs/hscript-improved.git
 haxelib git flxanimate https://github.com/ShadowMario/flxanimate dev
