@@ -17,12 +17,12 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
-//import mobile.backend.MobileScaleMode;
+import mobile.backend.MobileScaleMode;
 import openfl.events.KeyboardEvent;
 import lime.system.System as LimeSystem;
-//import mobile.objects.MobileControls;
+import mobile.objects.MobileControls;
 #if mobile
-//import mobile.states.CopyState;
+import mobile.states.CopyState;
 #end
 
 #if linux
@@ -82,10 +82,11 @@ class Main extends Sprite
 		super();
 		#if mobile
 		#if android
-		//StorageUtil.requestPermissions();
+		StorageUtil.requestPermissions();
 		#end
 		Sys.setCwd(StorageUtil.getStorageDirectory());
 		#end
+		backend.CrashHandler.init();
 
 
 		#if windows //DPI AWARENESS BABY
@@ -101,7 +102,7 @@ class Main extends Sprite
 		CppAPI.darkMode();
 		#end
 
-			trace('Game Successfully Started!');
+		trace('Game Successfully Started!');
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
@@ -182,20 +183,20 @@ class Main extends Sprite
 		#end
 
 		
-		#if CRASH_HANDLER
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
+	//	#if CRASH_HANDLER
+	//	Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
+	//	#end
 
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
 		#end
-		//MobileControls.initSave();
+		MobileControls.initSave();
 
 		#if android FlxG.android.preventDefaultKeys = [BACK]; #end
 
 		#if mobile
-	//	LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver; 		
-	//	FlxG.scaleMode = new MobileScaleMode();
+		LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver; 		
+		FlxG.scaleMode = new MobileScaleMode();
 		#end
 		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {
@@ -222,7 +223,7 @@ class Main extends Sprite
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
-	#if CRASH_HANDLER
+	/*#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void
 	{
 		var errMsg:String = "";
@@ -264,4 +265,5 @@ class Main extends Sprite
 		Sys.exit(1);
 	}
 	#end
+	*/
 }

@@ -1,14 +1,20 @@
 package backend;
 
 import flixel.FlxSubState;
+import mobile.flixel.FlxVirtualPad as TouchPad;
+import mobile.objects.MobileControls;
 
 class MusicBeatSubstate extends FlxSubState
-{
+{	
+	public static var instance:MusicBeatSubstate;
+
 	public function new()
 	{
+		instance = this;
+		controls.isInSubstate = true;
 		super();
 	}
-
+	
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
 
@@ -24,6 +30,69 @@ class MusicBeatSubstate extends FlxSubState
 
 	inline function get_controls():Controls
 		return Controls.instance;
+
+	public var touchPad:TouchPad;
+	public var mobileControls:MobileControls;
+
+	public function addMobileControls(defaultDrawTarget:Bool = true):Void
+		{
+			mobileControls = new MobileControls();
+	
+			var camControls = new flixel.FlxCamera();
+			camControls.bgColor.alpha = 0;
+			FlxG.cameras.add(camControls, defaultDrawTarget);
+	
+			mobileControls.cameras = [camControls];
+			mobileControls.visible = false;
+			add(mobileControls);
+		}
+
+		public function removeMobileControls()
+			{
+				if (mobileControls != null)
+					remove(mobileControls);
+			}
+	
+		public function addTouchPad(DPad:String, Action:String)
+		{
+			touchPad = new TouchPad(DPad, Action);
+			add(touchPad);
+		}
+	
+		public function removeTouchPad()
+		{
+			if (touchPad != null)
+				remove(touchPad);
+		}
+	
+		public function addTouchPadCamera(defaultDrawTarget:Bool = true):Void
+		{
+			if (touchPad != null)
+			{
+				var camControls:FlxCamera = new FlxCamera();
+				camControls.bgColor.alpha = 0;
+				FlxG.cameras.add(camControls, defaultDrawTarget);
+				touchPad.cameras = [camControls];
+			}
+		}
+
+		override function destroy()
+			{
+				super.destroy();
+		
+				controls.isInSubstate = false;
+				if (touchPad != null)
+				{
+					touchPad = FlxDestroyUtil.destroy(touchPad);
+					touchPad = null;
+				}
+				if (mobileControls != null)
+				{
+					mobileControls = FlxDestroyUtil.destroy(mobileControls);
+					mobileControls = null;
+				}
+			}
+		
 
 	override function update(elapsed:Float)
 	{

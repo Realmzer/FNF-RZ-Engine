@@ -1,7 +1,14 @@
 package backend.utils;
 
+import io.colyseus.serializer.schema.types.*;
+
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
+
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
 
 class CoolUtil
 {
@@ -224,6 +231,17 @@ class CoolUtil
 		#end
 	}
 
+	public static function camLerpShit(ratio:Float)
+		{
+			return FlxG.elapsed / (1 / 60) * ratio;
+		}
+
+	public static function coolLerp(a:Float, b:Float, ratio:Float)
+		{
+			return a + camLerpShit(ratio) * (b - a);
+		}
+		
+
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));
 	}
@@ -250,6 +268,11 @@ class CoolUtil
 		// #if (flixel < "5.0.0") return company; #else
 		return '${company}/${flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
 		// #end
+	}
+
+	public static function getWindowTitle():String {
+		@:privateAccess var attributes = lime.app.Application.current.window.__attributes;
+		return Reflect.hasField(attributes, "title") ? attributes.title : "Lime Application";
 	}
 
 	public static function precacheSound(sound:String, ?library:String = null):Void {
