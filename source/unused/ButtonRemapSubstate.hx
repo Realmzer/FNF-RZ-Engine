@@ -1,4 +1,4 @@
-package substate;
+package;
 
 import flixel.FlxSubState;
 

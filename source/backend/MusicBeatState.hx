@@ -4,13 +4,9 @@ import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
 import backend.PsychCamera;
-import mobile.flixel.FlxVirtualPad as TouchPad;
-import mobile.objects.MobileControls;
 
 class MusicBeatState extends FlxUIState
 {
-	public static var instance:MusicBeatState;
-
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
 
@@ -25,75 +21,9 @@ class MusicBeatState extends FlxUIState
 		return Controls.instance;
 	}
 
-	public var touchPad:TouchPad;
-	public var mobileControls:MobileControls;
-	public var camControls:FlxCamera;
-	public var vpadCam:FlxCamera;
-
-	public function addTouchPad(DPad:String, Action:String)
-	{
-		touchPad = new TouchPad(DPad, Action);
-		add(touchPad);
-	}
-
-	public function removeTouchPad()
-	{
-		if (touchPad != null)
-			remove(touchPad);
-	}
-
-	public function addMobileControls(defaultDrawTarget:Bool = true):Void
-		{
-			mobileControls = new MobileControls();
-	
-			camControls = new FlxCamera();
-			camControls.bgColor.alpha = 0;
-			FlxG.cameras.add(camControls, defaultDrawTarget);
-	
-			mobileControls.cameras = [camControls];
-			mobileControls.visible = false;
-			add(mobileControls);
-		}
-	
-		public function removeMobileControls()
-		{
-			if (mobileControls != null)
-				remove(mobileControls);
-		}
-	
-		public function addTouchPadCamera(defaultDrawTarget:Bool = true):Void
-		{
-			if (touchPad != null)
-			{
-				vpadCam = new FlxCamera();
-				vpadCam.bgColor.alpha = 0;
-				FlxG.cameras.add(vpadCam, defaultDrawTarget);
-				touchPad.cameras = [vpadCam];
-			}
-		}
-		
-	override function destroy()
-	{
-		super.destroy();
-
-		if (touchPad != null)
-		{
-			touchPad = FlxDestroyUtil.destroy(touchPad);
-			touchPad = null;
-		}
-
-		if (mobileControls != null)
-		{
-			mobileControls = FlxDestroyUtil.destroy(mobileControls);
-			mobileControls = null;
-		}
-	}
-
 	var _psychCameraInitialized:Bool = false;
 
 	override function create() {
-		instance = this;
-		
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		#if MODS_ALLOWED Mods.updatedOnState = false; #end
 
