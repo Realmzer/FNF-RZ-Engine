@@ -1,5 +1,6 @@
 package states;
 
+import objects.PsychVideoSprite.VidCallbacks;
 import backend.utils.EtternaFunctions;
 import backend.Highscore;
 import backend.StageData;
@@ -39,10 +40,10 @@ import openfl.filters.ShaderFilter;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
-#elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
-#elseif (hxCodec == "2.6.0") import VideoHandler;
-#else import vlc.MP4Handler as VideoHandler; #end
+//#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
+//#elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
+//#elseif (hxCodec == "2.6.0") import VideoHandler;
+//#else import vlc.MP4Handler as VideoHandler; #end
 #end
 
 import objects.Note.EventNote;
@@ -59,6 +60,8 @@ import psychlua.HScript;
 #if SScript
 import tea.SScript;
 #end
+
+import shaders.GreenScreenShader;
 
 /**
  * This is where all the Gameplay stuff happens and is managed
@@ -838,7 +841,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String)
+	/*public function startVideo(name:String)
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
@@ -880,6 +883,25 @@ class PlayState extends MusicBeatState
 		return;
 		#end
 	}
+*/
+
+public function playVideo(name:String, ?vis:Bool = true){
+	var video = new PsychVideoSprite();
+	video.shader = new GreenScreenShader();
+	video.addCallback(VidCallbacks.ONFORMAT,()->{
+		video.cameras = [camHUD];
+		video.scrollFactor.set();
+		video.setGraphicSize(0,FlxG.height);
+		video.updateHitbox();
+		video.visible = vis;
+	});
+	video.addCallback(VidCallbacks.ONEND,()->{
+		video.destroy();
+	});
+	video.load(Paths.video(name));
+	video.play();
+	add(video);
+}
 
 	function startAndEnd()
 	{
@@ -1547,6 +1569,7 @@ class PlayState extends MusicBeatState
 				vocals.pause();
 				opponentVocals.pause();
 			}
+			PsychVideoSprite.globalPause();
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = false);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = false);
 		}
@@ -1565,9 +1588,9 @@ class PlayState extends MusicBeatState
 			{
 				resyncVocals();
 			}
+			PsychVideoSprite.globalResume();
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = true);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = true);
-
 			paused = false;
 			callOnScripts('onResume');
 			resetRPC(startTimer != null && startTimer.finished);

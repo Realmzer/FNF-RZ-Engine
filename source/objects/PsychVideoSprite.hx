@@ -1,4 +1,6 @@
 package objects;
+import hxvlc.flixel.FlxVideoSprite;
+
 
 //data play
 class PsychVideoSprite extends FlxVideoSprite

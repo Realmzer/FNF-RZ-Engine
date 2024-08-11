@@ -80,6 +80,7 @@ import backend.system.macros.Utils;
 
 import objects.Alphabet;
 import objects.BGSprite;
+import hxvlc.flixel.*;
 
 import states.PlayState;
 import states.LoadingState;

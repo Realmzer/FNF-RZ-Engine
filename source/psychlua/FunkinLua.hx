@@ -1352,7 +1352,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
 			if(FileSystem.exists(Paths.video(videoFile))) {
-				game.startVideo(videoFile);
+				game.playVideo(videoFile);
 				return true;
 			} else {
 				luaTrace('startVideo: Video file not found: ' + videoFile, false, false, FlxColor.RED);
