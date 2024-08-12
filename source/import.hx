@@ -1,7 +1,7 @@
 #if !macro
 //Discord API
 #if DISCORD_ALLOWED
-import backend.Discord;
+import backend.api.Discord;
 #end
 
 //Psych

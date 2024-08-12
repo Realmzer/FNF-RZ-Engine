@@ -85,7 +85,16 @@ class HScript extends SScript
 
 		// Some very commonly used classes
 		set('FlxG', flixel.FlxG);
+		set('FlxBasic', flixel.FlxBasic);
+		set('FlxGradient', flixel.util.FlxGradient);
+		set('FlxDestroyUtil', flixel.util.FlxDestroyUtil);
+		set('FlxSpriteUtil', flixel.util.FlxSpriteUtil);
+		set('FlxStringUtil', flixel.util.FlxStringUtil);
 		set('FlxMath', flixel.math.FlxMath);
+		set('FlxMatrix', flixel.math.FlxMatrix);
+		set('FlxRandom', flixel.math.FlxRandom);
+		set('FlxRect', flixel.math.FlxRect);
+		set('FlxAngle', flixel.math.FlxAngle);
 		set('FlxSprite', flixel.FlxSprite);
 		set('FlxCamera', flixel.FlxCamera);
 		set('PsychCamera', backend.PsychCamera);
@@ -113,6 +122,8 @@ class HScript extends SScript
 		#if flxanimate
 		set('FlxAnimate', FlxAnimate);
 		#end
+		set('CoolUtil',   CoolUtil);
+
 
 		// Functions & Variables
 		set('setVar', function(name:String, value:Dynamic) {
