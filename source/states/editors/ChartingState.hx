@@ -149,6 +149,11 @@ class ChartingState extends MusicBeatState
 
 	var infoBG:FlxSprite;
 
+	var tipBg:FlxSprite;
+	var fullTipText:FlxText;
+
+	var camUI:FlxCamera;
+
 	var zoomList:Array<Float> = [
 		0.25,
 		0.5,
@@ -169,6 +174,7 @@ class ChartingState extends MusicBeatState
 	private var blockPressWhileScrolling:Array<FlxUIDropDownMenu> = [];
 
 	var waveformSprite:FlxSprite;
+	
 	var gridLayer:FlxTypedGroup<FlxSprite>;
 
 	public static var quantization:Int = 16;
@@ -278,6 +284,9 @@ class ChartingState extends MusicBeatState
 		reloadGridLayer();
 		Conductor.bpm = _song.bpm;
 		Conductor.mapBPMChanges(_song);
+		camUI = new FlxCamera();
+		camUI.bgColor.alpha = 0;
+		FlxG.cameras.add(camUI, false);
 		if(curSec >= _song.notes.length) curSec = _song.notes.length - 1;
 
 		bpmTxt = new FlxText(1000, 50, 0, "", 16);
@@ -386,6 +395,60 @@ class ChartingState extends MusicBeatState
 		add(zoomTxt);
 
 		updateGrid();
+		var tipText:FlxText = new FlxText(FlxG.width - 210, FlxG.height - 30, 200, 'Press F1 for Help', 20);
+		tipText.cameras = [camUI];
+		tipText.setFormat(null, 16, FlxColor.WHITE, RIGHT);
+		tipText.borderColor = FlxColor.BLACK;
+		tipText.scrollFactor.set();
+		tipText.borderSize = 1;
+		tipText.active = false;
+		add(tipText);
+
+		tipBg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+		tipBg.cameras = [camUI];
+		tipBg.scale.set(FlxG.width, FlxG.height);
+		tipBg.updateHitbox();
+		tipBg.scrollFactor.set();
+		tipBg.visible = tipBg.active = false;
+		tipBg.alpha = 0.6;
+		add(tipBg);
+		
+		fullTipText = new FlxText(0, 0, FlxG.width - 200);
+		fullTipText.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE, CENTER);
+		fullTipText.cameras = [camUI];
+		fullTipText.scrollFactor.set();
+		fullTipText.visible = fullTipText.active = false;
+		fullTipText.text = [
+			"W/S/Mouse Wheel - Move Conductor's Time",
+			"A/D - Change Sections",
+			"Q/E - Decrease/Increase Note Sustain Length",
+			"Hold Shift/Alt to Increase/Decrease move by 4x",
+			"",
+			"F12 - Preview Chart",
+			"Enter - Playtest Chart",
+			"Space - Stop/Resume song",
+			"",
+			"Alt + Click - Select Note(s)",
+			"Shift + Click - Select/Unselect Note(s)",
+			"Right Click - Selection Box",
+			"",
+			"Z/X - Zoom in/out",
+			"Left/Right - Change Snap",
+			#if FLX_PITCH
+			"Left Bracket / Right Bracket - Change Song Playback Rate",
+			"ALT + Left Bracket / Right Bracket - Reset Song Playback Rate",
+			#end
+			"",
+			"Ctrl + Z - Undo",
+			"Ctrl + Y - Redo",
+			"Ctrl + X - Cut Selected Notes",
+			"Ctrl + C - Copy Selected Notes",
+			"Ctrl + V - Paste Copied Notes",
+			"Ctrl + A - Select all in current Section",
+			"Ctrl + S - Quicksave",
+		].join('\n');
+		fullTipText.screenCenter();
+		//add(fullTipText);
 		super.create();
 	}
 
@@ -2186,6 +2249,11 @@ class ChartingState extends MusicBeatState
 			if (FlxG.keys.pressed.SHIFT)
 				shiftThing = 4;
 
+			if(FlxG.keys.justPressed.F1)
+				{
+					var vis:Bool = !fullTipText.visible;
+					tipBg.visible = tipBg.active = fullTipText.visible = fullTipText.active = vis;
+				}
 			if (FlxG.keys.justPressed.D)
 				changeSection(curSec + shiftThing);
 			if (FlxG.keys.justPressed.A) {
@@ -2202,7 +2270,6 @@ class ChartingState extends MusicBeatState
 				}
 			}
 		}
-
 		strumLineNotes.visible = quant.visible = vortex;
 
 		if(FlxG.sound.music.time < 0) {

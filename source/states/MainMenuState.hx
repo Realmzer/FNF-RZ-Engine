@@ -50,6 +50,9 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		if (FlxG.sound.music.pitch < 1 || FlxG.sound.music.pitch > 1)
+		FlxG.sound.music.pitch = 1;
+
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = 0.25;

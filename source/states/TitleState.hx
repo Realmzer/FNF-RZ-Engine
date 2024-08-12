@@ -16,6 +16,7 @@ import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 
 import shaders.ColorSwap;
+import shaders.TitleOutline;
 
 import states.StoryMenuState;
 import states.OutdatedState;
@@ -176,6 +177,7 @@ class TitleState extends MusicBeatState
 	}
 
 	var logoBl:FlxSprite;
+	var outlineShaderShit:TitleOutline;
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
@@ -205,6 +207,7 @@ class TitleState extends MusicBeatState
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
 		add(bg);
+		
 
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
@@ -215,6 +218,8 @@ class TitleState extends MusicBeatState
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
+
+		outlineShaderShit = new TitleOutline();
 
 		if(ClientPrefs.data.shaders) swagShader = new ColorSwap();
 		gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
@@ -364,6 +369,33 @@ class TitleState extends MusicBeatState
 			}
 		}
 		#end
+
+		#if FLX_PITCH
+		if (FlxG.keys.pressed.UP) FlxG.sound.music.pitch += 0.5 * elapsed;
+	
+		if (FlxG.keys.pressed.DOWN) FlxG.sound.music.pitch -= 0.5 * elapsed;
+		#end
+	
+		#if desktop
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+		  Sys.exit(0);
+		}
+		#end
+
+		if (FlxG.keys.justPressed.I)
+			{
+			  FlxTween.tween(outlineShaderShit, {funnyX: 50, funnyY: 50}, 0.6, {ease: FlxEase.quartOut});
+			}
+			if (FlxG.keys.pressed.D) outlineShaderShit.funnyX += 1;
+			// outlineShaderShit.xPos.value[0] += 1;
+		
+			if (FlxG.keys.justPressed.Y)
+			{
+			  FlxTween.cancelTweensOf(FlxG.stage.window, ['x', 'y']);
+			  FlxTween.tween(FlxG.stage.window, {x: FlxG.stage.window.x + 300}, 1.4, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.35});
+			  FlxTween.tween(FlxG.stage.window, {y: FlxG.stage.window.y + 100}, 0.7, {ease: FlxEase.quadInOut, type: PINGPONG});
+			}
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
