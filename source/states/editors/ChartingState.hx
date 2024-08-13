@@ -352,7 +352,7 @@ class ChartingState extends MusicBeatState
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
 		\n
-		\nEsc - Test your chart inside Chart Editor
+		\nEsc - Test your chart inside the Chart Editor
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
 		\nSpace - Stop/Resume song";

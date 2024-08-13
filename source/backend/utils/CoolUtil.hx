@@ -62,6 +62,15 @@ class CoolUtil
 			return Sys.getEnv("TEMP");
 		}
 
+		public static function showAlertWindow(message:String, title:String) {
+			lime.app.Application.current.window.alert(message, title);
+		}
+
+		public static function changeWindowName(name:String) 
+			{
+				openfl.Lib.application.window.title = name;
+			}
+
 		public static function generateTextFile(fileContent:String, fileName:String):Void
 			{
 				#if desktop

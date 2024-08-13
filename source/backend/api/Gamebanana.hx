@@ -210,12 +210,12 @@ class GameBanana {
             }
         }
 
-		if (daModUrl == null) {
-			Alert.alert("Failed to download!", "Unsupported file archive type!\n(Only ZIP, TAR, TGZ, RAR archives are supported!)");
-			RequestState.requestURL(mod.pageDownload, "The following mod needs to be installed from this source", true);
-			return;
-		}
+		//if (daModUrl == null) {
+		//	Alert.alert("Failed to download!", "Unsupported file archive type!\n(Only ZIP, TAR, TGZ, RAR archives are supported!)");
+	//		RequestState.requestURL(mod.pageDownload, "The following mod needs to be installed from this source", true);
+		//	return;
+	//	}
 
-		OnlineMods.startDownloadMod(dlFileName, daModUrl, mod, onSuccess);
+	//	OnlineMods.startDownloadMod(dlFileName, daModUrl, mod, onSuccess);
     }
 }

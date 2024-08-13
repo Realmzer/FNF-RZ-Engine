@@ -58,8 +58,10 @@ import backend.Difficulty;
 import backend.Mods;
 
 // Backend Utils
-import backend.utils.CppAPI;
 import backend.utils.CoolUtil;
+import backend.utils.CppAPI;
+import backend.utils.CryptoUtils;
+import backend.utils.EtternaFunctions;
 import backend.utils.FileAttributeWrapper;
 import backend.utils.HiddenProcess;
 import backend.utils.IniUtil;
@@ -73,6 +75,7 @@ import backend.utils.Wallpaper;
 import backend.utils.Windows;
 import backend.utils.WindowsData;
 import backend.utils.WindowsSystem;
+import backend.utils.ZipUtil;
 
 // System
 import backend.system.CommandLineHandler;
@@ -80,7 +83,6 @@ import backend.system.macros.Utils;
 
 import objects.Alphabet;
 import objects.BGSprite;
-import hxvlc.flixel.*;
 
 import states.PlayState;
 import states.LoadingState;
@@ -89,6 +91,8 @@ import states.LoadingState;
 import flxanimate.*;
 //import flxanimate.PsychFlxAnimate as FlxAnimate;
 #end
+
+import hxvlc.flixel.*;
 
 //Flixel
 import flixel.sound.FlxSound;
