@@ -102,7 +102,6 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@main
 
       - uses: krdlab/setup-haxe@master
