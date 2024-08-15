@@ -119,7 +119,7 @@ jobs:
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-       run: haxelib run lime build mac -D ${{ inputs.buildFlags }}
+        run: haxelib run lime build mac -D ${{ inputs.buildFlags }}
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
