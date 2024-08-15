@@ -94,7 +94,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build windows -D ${{ inputs.buildFlags }}
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@main
         with:
           name: windowsBuild
           path: export/release/windows/bin
