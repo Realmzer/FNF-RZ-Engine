@@ -510,7 +510,7 @@ class PlayState extends MusicBeatState
 			timeTxt.y += 3;
 		}
 
-		if(!ClientPrefs.data.nosplashes){
+		if(ClientPrefs.data.notesplashes){
 			var splash:NoteSplash = new NoteSplash(100, 100);
 			grpNoteSplashes.add(splash);
 			splash.alpha = 0.000001; //cant make it invisible or it won't allow precaching
@@ -521,7 +521,7 @@ class PlayState extends MusicBeatState
 
 		generateSong(SONG.song);
 
-	if(!ClientPrefs.data.nosplashes){
+	if(ClientPrefs.data.notesplashes){
 			noteGroup.add(grpNoteSplashes);
 			}
 
@@ -2499,7 +2499,7 @@ public function playVideo(name:String, ?vis:Bool = true){
 		note.rating = daRating.name;
 		score = daRating.score;
 
-		if(daRating.noteSplash && !note.noteSplashData.disabled)
+		if(daRating.noteSplash && !note.noteSplashData.disabled && ClientPrefs.data.notesplashes)
 			spawnNoteSplashOnNote(note);
 
 		if(!practiceMode && !cpuControlled) {
@@ -2973,7 +2973,7 @@ public function playVideo(name:String, ?vis:Bool = true){
 			}
 
 			noteMiss(note);
-			if(!note.noteSplashData.disabled && !note.isSustainNote) spawnNoteSplashOnNote(note);
+			if(!note.noteSplashData.disabled && !note.isSustainNote && ClientPrefs.data.notesplashes) spawnNoteSplashOnNote(note);
 			if(!note.isSustainNote) invalidateNote(note);
 			return;
 		}
@@ -3408,24 +3408,29 @@ public function playVideo(name:String, ?vis:Bool = true){
 	}
 
 	function strumPlayAnim(isDad:Bool, id:Int, time:Float) {
-		var spr:StrumNote = null;
+		var spr1:StrumNote = null;
+		var spr2:StrumNote = null;
 		if(isDad) {
-			if(!ClientPrefs.data.oppstrumstatic){
-			spr = opponentStrums.members[id];
-			}
+			spr1 = opponentStrums.members[id];
 		} else {
-			if(!ClientPrefs.data.playerstrumstatic){		
-			spr = playerStrums.members[id];
-		}
+			spr2 = playerStrums.members[id];
 		}
 
-		if(!ClientPrefs.data.playerstrumstatic){	
-		if(spr != null) {
-			spr.playAnim('confirm', true);
-			spr.resetAnim = time;
+		if(spr1 != null) {
+			if(!ClientPrefs.data.oppstrumstatic)
+			{
+			spr1.playAnim('confirm', true);
+			spr1.resetAnim = time;
 		}
 	}
-}
+		if(spr2 != null) {
+			if(!ClientPrefs.data.playerstrumstatic)
+			{
+			spr2.playAnim('confirm', true);
+			spr2.resetAnim = time;
+		}
+	}
+	}
 
 	public var ratingName:String = '?';
 	public var ratingPercent:Float;

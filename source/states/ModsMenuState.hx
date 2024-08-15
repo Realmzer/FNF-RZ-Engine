@@ -97,7 +97,7 @@ class ModsMenuState extends MusicBeatState
 		//
 		var buttonX = bgList.x;
 		var buttonWidth = Std.int(bgList.width);
-		var buttonHeight = 80;
+		var buttonHeight = 50;
 
 		buttonReload = new MenuButton(buttonX, bgList.y + bgList.height + 20, buttonWidth, buttonHeight, "RELOAD", reload);
 		add(buttonReload);

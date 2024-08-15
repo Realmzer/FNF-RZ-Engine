@@ -8,12 +8,6 @@ class OptimizationsSettingsSubState extends BaseOptionsMenu
 		title = 'Optimization';
 		rpcTitle = 'Optimization Settings Menu'; //for Discord Rich Presence
 
-		var option:Option = new Option('Disable Note Splash', //No more splashy :)
-		"Disables Notesplashes. \n Disables Note Colors menu",
-		'nosplashes',
-		'bool');
-		addOption(option);
-
 		var option:Option = new Option('Disable Ratings', //No more Combos
 		"If checked, it disables the ratings that popup \n when pressing a note.",
 		'noratings',

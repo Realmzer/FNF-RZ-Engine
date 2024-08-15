@@ -44,7 +44,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.onChange = onChangeNoteSkin;
 			noteOptionID = optionsArray.length - 1;
 		}
-		
+
+		var option:Option = new Option('Note Splashes', //No more splashy :)
+		"If unchecked, disables note splashes.",
+		'notesplashes',
+		'bool');
+		addOption(option);
+
+		if(ClientPrefs.data.notesplashes)
+		{
 		var noteSplashes:Array<String> = Mods.mergeAllTextsNamed('images/noteSplashes/list.txt');
 		if(noteSplashes.length > 0)
 		{
@@ -59,7 +67,10 @@ class VisualsUISubState extends BaseOptionsMenu
 				noteSplashes);
 			addOption(option);
 		}
+	}
 
+	if(ClientPrefs.data.notesplashes)
+	{
 		var option:Option = new Option('Note Splash Opacity',
 			'How much transparent should the Note Splashes be.',
 			'splashAlpha',
@@ -70,7 +81,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
-
+	}
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',
@@ -179,9 +190,9 @@ class VisualsUISubState extends BaseOptionsMenu
 			var note:StrumNote = notes.members[i];
 			if(notesTween[i] != null) notesTween[i].cancel();
 			if(curSelected == noteOptionID)
-				notesTween[i] = FlxTween.tween(note, {y: noteY}, Math.abs(note.y / (200 + noteY)) / 3, {ease: FlxEase.quadInOut});
+				notesTween[i] = FlxTween.tween(note, {y: noteY}, Math.abs(note.y / (200 + noteY)) / 1.5, {ease: FlxEase.elasticInOut});
 			else
-				notesTween[i] = FlxTween.tween(note, {y: -200}, Math.abs(note.y / (200 + noteY)) / 3, {ease: FlxEase.quadInOut});
+				notesTween[i] = FlxTween.tween(note, {y: -200}, Math.abs(note.y / (200 + noteY)) / 1.5, {ease: FlxEase.elasticInOut});
 		}
 	}
 

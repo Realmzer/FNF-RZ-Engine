@@ -14,6 +14,11 @@ import haxe.Json;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+import openfl.Lib;
+
+import lime.app.Application;
+import lime.ui.Window;
+
 
 import shaders.ColorSwap;
 import shaders.TitleOutline;
@@ -380,7 +385,11 @@ class TitleState extends MusicBeatState
 		#if desktop
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
-		  Sys.exit(0);
+		trace('Exiting...');
+		FlxTween.tween(FlxG.camera, {alpha: 0}, 3, {onComplete: e -> Sys.exit(0)});
+		FlxG.sound.music.fadeOut(3);
+		FlxTween.tween(FlxG.sound.music, {pitch: 0}, 3);
+		FlxTween.tween(Lib.application.window, {width: 150, height: 150}, 3, {ease: FlxEase.expoInOut});
 		}
 		#end
 

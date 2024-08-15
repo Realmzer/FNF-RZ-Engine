@@ -193,6 +193,19 @@ class ChartingState extends MusicBeatState
 		96,
 		192
 	];
+	public var quantColors:Array<FlxColor> = [
+		0xFFDF0000,
+		0xFF4040CF,
+		0xFFAF00AF,
+		0xFFFFAF00,
+		0xFFFFFFFF,
+		0xFFFFA0FF,
+		0xFFFF6030,
+		0xFF00CFCF,
+		0xFF00CF00,
+		0xFF9F9F9F,
+		0xFF3F3F3F,
+	];
 
 	var text:String = "";
 	public static var vortex:Bool = false;
@@ -2343,9 +2356,12 @@ class ChartingState extends MusicBeatState
 					var data:Int = note.noteData % 4;
 					var noteDataToCheck:Int = note.noteData;
 					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+					if(!ClientPrefs.data.playerstrumstatic)
+					{
 						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
 						strumLineNotes.members[noteDataToCheck].resetAnim = ((note.sustainLength / 1000) + 0.15) / playbackSpeed;
-					if(!playedSound[data]) {
+					}
+						if(!playedSound[data]) {
 						if(note.hitsoundChartEditor && ((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)))
 						{
 							var soundToPlay = note.hitsound;

@@ -14,12 +14,7 @@ class OptionsState extends MusicBeatState
 	function openSelectedSubstate(label:String) {
 		switch(label) {
 			case 'Note Colors':
-				if(!ClientPrefs.data.oppstrumstatic && !ClientPrefs.data.nosplashes && !ClientPrefs.data.playerstrumstatic){
 				openSubState(new options.NotesSubState());
-				}
-				if(ClientPrefs.data.oppstrumstatic && ClientPrefs.data.nosplashes && ClientPrefs.data.playerstrumstatic){
-						trace('Nope');
-				}
 			case 'Controls':
 				openSubState(new options.ControlsSubState());
 			case 'Graphics':

@@ -18,6 +18,8 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Portrait Editor',
 		'Note Splash Debug'
 	];
+
+	
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
 
@@ -37,6 +39,11 @@ class MasterEditorMenu extends MusicBeatState
 		bg.scrollFactor.set();
 		bg.color = 0xFF353535;
 		add(bg);
+
+		//var masterText:Alphabet = new Alphabet(200, 300, 'SKIBIDI', true);
+		//masterText.isMenuItem = true;
+		//masterText.snapToPosition();
+		//add(masterText);
 
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
@@ -119,7 +126,7 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Note Splash Debug':
 					MusicBeatState.switchState(new NoteSplashDebugState());
 			}
-			FlxG.sound.music.volume = 0;
+			FlxG.sound.music.volume = 0.2;
 			FreeplayState.destroyFreeplayVocals();
 		}
 		

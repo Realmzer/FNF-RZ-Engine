@@ -75,7 +75,7 @@ class CreditsState extends MusicBeatState
 			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'.",							 'https://twitter.com/kawaisprite',		'378FC7'],
 			[''],
 			["Psych Engine Discord"],
-			["Join the Psych Ward!", "discord", " ", "https://discord.gg/2ka77eMXDv", "5165F6"]
+			["Join the Psych Ward!", "discord", "", "https://discord.gg/2ka77eMXDv", "5165F6"]
 		];
 		
 		for(i in defaultList) {
@@ -135,7 +135,7 @@ class CreditsState extends MusicBeatState
 		//descText.borderSize = 2.4;
 		descBox.sprTracker = descText;
 		add(descText);
-
+		
 		bg.color = CoolUtil.colorFromString(creditsStuff[curSelected][4]);
 		intendedColor = bg.color;
 		changeSelection();

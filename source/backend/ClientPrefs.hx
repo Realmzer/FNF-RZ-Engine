@@ -90,7 +90,7 @@ import states.TitleState;
 
 	public var smoothBar:Bool = true;
 	public var noratings:Bool = false;
-	public var nosplashes:Bool = false;
+	public var notesplashes:Bool = true;
 	public var oppstrumstatic:Bool = false;
 	public var playerstrumstatic:Bool = false;
 }

@@ -54,7 +54,7 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		if (FlxG.sound.music.pitch < 1 || FlxG.sound.music.pitch > 1)
-		FlxG.sound.music.pitch = 1;
+		FlxTween.tween(FlxG.sound.music, {pitch: 1}, 1.5);
 
 		persistentUpdate = persistentDraw = true;
 

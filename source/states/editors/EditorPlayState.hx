@@ -74,10 +74,13 @@ class EditorPlayState extends MusicBeatSubstate
 	var dataTxt:FlxText;
 	var guitarHeroSustains:Bool = false;
 
-	var cpuControlled:Bool = false;
+	public static var instance:EditorPlayState;
+
+	public static var cpuControlled:Bool = false;
 
 	public function new(playbackRate:Float)
-	{
+	{  
+		instance = this;
 		super();
 		
 		/* setting up some important data */
@@ -108,14 +111,14 @@ class EditorPlayState extends MusicBeatSubstate
 		/**** NOTES ****/
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
-		if(!ClientPrefs.data.nosplashes)
+		if(ClientPrefs.data.notesplashes)
 			{
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
 			}
 
 
-		if(!ClientPrefs.data.nosplashes)
+		if(ClientPrefs.data.notesplashes)
 		{
 		var splash:NoteSplash = new NoteSplash(100, 100);
 		grpNoteSplashes.add(splash);
@@ -858,7 +861,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if(note.hitCausesMiss) {
 			noteMiss(note);
-			if(!note.noteSplashData.disabled && !note.isSustainNote && !ClientPrefs.data.nosplashes)
+			if(!note.noteSplashData.disabled && !note.isSustainNote && ClientPrefs.data.notesplashes)
 				spawnNoteSplashOnNote(note);
 
 			if (!note.isSustainNote)
@@ -949,7 +952,7 @@ class EditorPlayState extends MusicBeatSubstate
 	function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, note);
-		if(!ClientPrefs.data.nosplashes)
+		if(ClientPrefs.data.notesplashes)
 			{
 		grpNoteSplashes.add(splash);
 			}

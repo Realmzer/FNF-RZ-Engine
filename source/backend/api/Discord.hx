@@ -14,7 +14,7 @@ class DiscordClient
 
 	public static function check()
 	{
-		if(ClientPrefs.data.discordRPC) initialize();
+		if(ClientPrefs.data.discordRPC) initialize(); 
 		else if(isInitialized) shutdown();
 	}
 	
@@ -30,6 +30,7 @@ class DiscordClient
 
 	public dynamic static function shutdown() {
 		Discord.Shutdown();
+		trace('Shutting down Discord RPC');
 		isInitialized = false;
 	}
 	

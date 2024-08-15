@@ -15,7 +15,7 @@ haxelib install SScript
 haxelib install tjson 1.4.0
 haxelib install markdown
 haxelib install UnRAR
-haxelib install crypto
+haxelib install markdown
 haxelib install hxvlc
 haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git
 haxelib git hscript-improved https://github.com/FNF-CNE-Devs/hscript-improved.git

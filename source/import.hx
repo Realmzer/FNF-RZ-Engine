@@ -58,28 +58,39 @@ import backend.Difficulty;
 import backend.Mods;
 
 // Backend Utils
+import backend.utils.BitmapUtil;
 import backend.utils.CoolUtil;
 import backend.utils.CppAPI;
 import backend.utils.CryptoUtils;
 import backend.utils.EtternaFunctions;
 import backend.utils.FileAttributeWrapper;
+import backend.utils.FlxInterpolateColor;
 import backend.utils.HiddenProcess;
+import backend.utils.HttpUtil;
 import backend.utils.IniUtil;
 import backend.utils.Linux;
 import backend.utils.Mac;
+import backend.utils.MarkdownUtil;
 import backend.utils.MemoryUtil;
 import backend.utils.NativeAPI;
 import backend.utils.NdllUtil;
+import backend.utils.ShaderResizeFix;
+import backend.utils.SortedArrayUtil;
+import backend.utils.SysZip;
 import backend.utils.Transparency;
 import backend.utils.Wallpaper;
 import backend.utils.Windows;
 import backend.utils.WindowsData;
 import backend.utils.WindowsSystem;
+import backend.utils.WindowUtils;
 import backend.utils.ZipUtil;
 
 // System
 import backend.system.CommandLineHandler;
+import backend.system.net.Socket;
 import backend.system.macros.Utils;
+import backend.system.macros.GitCommitMacro;
+import backend.system.macros.HashLinkFixer;
 
 import objects.Alphabet;
 import objects.BGSprite;
