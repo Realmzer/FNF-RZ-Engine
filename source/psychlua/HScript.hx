@@ -2,6 +2,7 @@ package psychlua;
 
 import flixel.FlxBasic;
 import objects.Character;
+import objects.*;
 import psychlua.LuaUtils;
 import psychlua.CustomSubstate;
 
@@ -107,12 +108,27 @@ class HScript extends SScript
 		set('Paths', Paths);
 		set('Conductor', Conductor);
 		set('ClientPrefs', ClientPrefs);
+		set('Controls', Controls);
+		set('Difficulty', Difficulty);
+		set('Highscore', Highscore);
+		set('NoteTypesConfig', NoteTypesConfig);
+		set('Rating', Rating);
+		set('Section', Section);
+		set('Song', Song);
+		set('SpectralAnalyzerEx', SpectralAnalyzerEx);
 		#if ACHIEVEMENTS_ALLOWED
 		set('Achievements', Achievements);
 		#end
 		set('Character', Character);
 		set('Alphabet', Alphabet);
 		set('Note', objects.Note);
+		set('PsychVideoSprite', PsychVideoSprite);
+		set('Bar', Bar);
+		set('HealthIcon', HealthIcon);
+		set('AttachedSprite', AttachedSprite);
+		set('AttachedText', AttachedText);
+		set('NoteSplash', NoteSplash);
+		set('StrumNote', StrumNote);
 		set('CustomSubstate', CustomSubstate);
 		#if (!flash && sys)
 		set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
@@ -122,7 +138,16 @@ class HScript extends SScript
 		#if flxanimate
 		set('FlxAnimate', FlxAnimate);
 		#end
-		set('CoolUtil',   CoolUtil);
+		set('CoolUtil', CoolUtil);
+		set('MarkdownUtil', MarkdownUtil);
+		set('MemoryUtil', MemoryUtil);
+		set('NdllUtil', NdllUtil);
+		set('BitmapUtil', BitmapUtil);
+		set('HttpUtil', HttpUtil);
+		set('IniUtil', IniUtil);
+		set('SortedArrayUtil', SortedArrayUtil);
+		set('FileAttributeWrapper', FileAttributeWrapper);
+		set('Vector3', math.Vector3);
 
 
 		// Functions & Variables
