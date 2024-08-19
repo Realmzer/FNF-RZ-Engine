@@ -144,7 +144,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 	
-
+/*
 		var option:Option = new Option('Add Frame Counter',
 			'If checked, adds a frame counter that shows how much frames\n the game has been running for.',
 			'showFramesRan',
@@ -159,6 +159,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		
+*/		
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
 			'pauseMusic',
