@@ -102,7 +102,7 @@ class Main extends Sprite
 		CppAPI.darkMode();
 		#end
 
-			trace('Game Started.');
+		trace('Game Started.');
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
@@ -190,7 +190,7 @@ class Main extends Sprite
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
 		#end
-		//MobileControls.initSave();
+	//  MobileControls.initSave();
 
 		#if android FlxG.android.preventDefaultKeys = [BACK]; #end
 
@@ -198,7 +198,7 @@ class Main extends Sprite
 	//	LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver; 		
 	//	FlxG.scaleMode = new MobileScaleMode();
 		#end
-		// shader coords fix
+	// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {
 		     if (FlxG.cameras != null) {
 			   for (cam in FlxG.cameras.list) {
@@ -235,7 +235,7 @@ class Main extends Sprite
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "./crashlog/" + "RealmEngine_" + dateNow + ".txt";
+		path = "./crashlog/" + "RZEngine_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{

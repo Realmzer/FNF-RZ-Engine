@@ -297,7 +297,7 @@ class LuaUtils
 		trace("Score: " + songScore + " Misses: " + misses + " Rating: " + rating + " Is FC?: " + isFC);
 	}
 
-	public static function showErrorWindow(message:String, errTitle:String = "An error has occured.") {
+	public static function showAlertWindow(message:String, errTitle:String) {
 		lime.app.Application.current.window.alert(message, errTitle);
 	}
 

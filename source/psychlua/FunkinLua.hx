@@ -1473,7 +1473,7 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "getRatingShit", LuaUtils.getRatingShit);
 
-		Lua_helper.add_callback(lua, "showErrorWindow", LuaUtils.showErrorWindow);
+		Lua_helper.add_callback(lua, "showAlertWindow", LuaUtils.showErrorWindow);
 
 		Lua_helper.add_callback(lua, "pauseAudio", LuaUtils.pauseAudio);
 
