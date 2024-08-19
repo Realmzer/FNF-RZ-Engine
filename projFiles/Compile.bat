@@ -1,7 +1,8 @@
 ::::::::::::::::::::::::::::::::::::::::::::
-:: Automatically check & get admin rights V2
+::        Getting Admin Permissions       ::
 ::::::::::::::::::::::::::::::::::::::::::::
 @echo off
+color 0a
 CLS
 ECHO.
 ECHO =============================
@@ -45,6 +46,7 @@ cd ..
 
 :Prompt
 cls
+color 0a
 title Compiler - Select Platform
 echo RZ Engine Compiler by Realmzer
 echo Select a Platform to Compile to:
@@ -72,10 +74,10 @@ pause >nul
 :compWindows
 title Compiler - Compiling Windows
 echo Compiling For Windows
-lime test windows
+haxelib run lime test windows
 echo ---
-echo 1) Close the script
-echo 2) Go back to platform selection
+echo 1 - Close the script
+echo 2 - Go back to platform selection
 set /p menu=Type option:
 if "%menu%"=="1" goto Close
 if "%menu%"=="2" goto Prompt
@@ -83,10 +85,10 @@ if "%menu%"=="2" goto Prompt
 :compMac
 title Compiler - Compiling Mac
 echo Compiling For Mac
-lime test mac
+haxelib run lime test mac
 echo ---
-echo 1) Close the script
-echo 2) Go back to platform selection
+echo 1 - Close the script
+echo 2 - Go back to platform selection
 set /p menu=Type option:
 if "%menu%"=="1" goto Close
 if "%menu%"=="2" goto Prompt
@@ -94,10 +96,10 @@ if "%menu%"=="2" goto Prompt
 :compLinux
 title Compiler - Compiling Linux
 echo Compiling For Linux
-lime test linux
+haxelib run lime test linux
 echo ---
-echo 1) Close the script
-echo 2) Go back to platform selection
+echo 1 - Close the script
+echo 2 - Go back to platform selection
 set /p menu=Type option:
 if "%menu%"=="1" goto Close
 if "%menu%"=="2" goto Prompt
@@ -105,10 +107,10 @@ if "%menu%"=="2" goto Prompt
 :compAndroid
 title Compiler - Compiling Android
 echo Compiling For Android
-lime test android
+haxelib run lime test android
 echo ---
-echo 1) Close the script
-echo 2) Go back to platform selection
+echo 1 - Close the script
+echo 2 - Go back to platform selection
 set /p menu=Type option:
 if "%menu%"=="1" goto Close
 if "%menu%"=="2" goto Prompt
@@ -116,10 +118,10 @@ if "%menu%"=="2" goto Prompt
 :compIOS
 title Compiler - Compiling IOS
 echo Compiling For IOS
-lime test ios
+haxelib run lime test ios
 echo ---
-echo 1) Close the script
-echo 2) Go back to platform selection
+echo 1 - Close the script
+echo 2 - Go back to platform selection
 set /p menu=Type option:
 if "%menu%"=="1" goto Close
 if "%menu%"=="2" goto Prompt
@@ -127,10 +129,10 @@ if "%menu%"=="2" goto Prompt
 :compCPP
 title Compiler - Compiling CPP
 echo Compiling For CPP
-lime test cpp
+haxelib run lime test cpp
 echo ---
-echo 1) Close the script
-echo 2) Go back to platform selection
+echo 1 - Close the script
+echo 2 - Go back to platform selection
 set /p menu=Type option:
 if "%menu%"=="1" goto Close
 if "%menu%"=="2" goto Prompt
