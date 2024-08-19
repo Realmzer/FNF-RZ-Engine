@@ -22,7 +22,7 @@ class FlashingState extends MusicBeatState
 		add(bg);
 
 		warnText = new FlxText(-500, 125, FlxG.width,
-			"Hey, watch out!\n
+			"\nHey, watch out!\n
 			This game contains some flashing lights!\n
 			Press ENTER to disable them now or go to options menu.\n
 			Press ESCAPE/ESC to ignore this message.\n

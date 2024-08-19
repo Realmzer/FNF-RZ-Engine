@@ -389,7 +389,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(FlxG.camera, {alpha: 0}, 3, {onComplete: e -> Sys.exit(0)});
 		FlxG.sound.music.fadeOut(3);
 		FlxTween.tween(FlxG.sound.music, {pitch: 0}, 3);
-		FlxTween.tween(Lib.application.window, {width: 150, height: 150}, 3, {ease: FlxEase.expoInOut});
+		//FlxTween.tween(Lib.application.window, {width: 150, height: 150}, 3, {ease: FlxEase.expoInOut});
 		}
 		#end
 
