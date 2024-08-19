@@ -340,7 +340,7 @@ class CharacterEditorState extends MusicBeatState
 				}
 				/*hideGhostButton.active = true;
 				hideGhostButton.alpha = 1;*/
-				trace('created ghost image');
+				trace('Created ghost image.');
 			}
 		});
 

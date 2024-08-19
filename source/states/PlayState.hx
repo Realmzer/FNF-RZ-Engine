@@ -2403,7 +2403,7 @@ public function playVideo(name:String, ?vis:Bool = true){
 				{
 					var difficulty:String = Difficulty.getFilePath();
 
-					trace('LOADING NEXT SONG');
+					trace('Loading next song...');
 					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);
 
 					FlxTransitionableState.skipNextTransIn = true;
@@ -2418,7 +2418,7 @@ public function playVideo(name:String, ?vis:Bool = true){
 			}
 			else
 			{
-				trace('WENT BACK TO FREEPLAY??');
+				trace('Went back to freeplay.');
 				Mods.loadTopMod();
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
@@ -3256,9 +3256,9 @@ public function playVideo(name:String, ?vis:Bool = true){
 
 					newScript.destroy();
 					hscriptArray.remove(newScript);
-					trace('failed to initialize tea interp!!! ($file)');
+					trace('Failed to initialize Tea interp!!! ($file)');
 				}
-				else trace('initialized tea interp successfully: $file');
+				else trace('Initialized Tea interp successfully: $file');
 			}
 
 		}

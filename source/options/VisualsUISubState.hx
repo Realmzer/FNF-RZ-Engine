@@ -136,14 +136,28 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool');
 			addOption(option);
 		
-		#if !mobile
+
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',
 			'showFPS',
 			'bool');
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
-		#end
+	
+
+		var option:Option = new Option('Add Frame Counter',
+			'If checked, adds a frame counter that shows how much frames\n the game has been running for.',
+			'showFramesRan',
+			'bool');
+		addOption(option);
+		option.onChange = onChangeFPSCounter;
+
+		var option:Option = new Option('Add Current OS to FPS Counter',
+			'If checked, adds a OS indicator to the FPS Counter.',
+			'showOSonFPS',
+			'bool');
+		addOption(option);
+		option.onChange = onChangeFPSCounter;
 		
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
@@ -233,11 +247,10 @@ class VisualsUISubState extends BaseOptionsMenu
 		super.destroy();
 	}
 
-	#if !mobile
+
 	function onChangeFPSCounter()
 	{
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = ClientPrefs.data.showFPS;
 	}
-	#end
 }

@@ -156,7 +156,7 @@ class LoadingState extends MusicBeatState
 		if(weekDir != null && weekDir.length > 0 && weekDir != '') directory = weekDir;
 
 		Paths.setCurrentLevel(directory);
-		trace('Setting asset folder to ' + directory);
+		trace('Setting assets folder to ' + directory);
 
 		/*#if NO_PRELOAD_ALL
 		var loaded:Bool = false;

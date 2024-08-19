@@ -98,7 +98,7 @@ class NoteSplashDebugState extends MusicBeatState
 					}
 
 				default:
-					trace('changed image to $text');
+					trace('Changed image to $text.');
 			}
 
 		};
@@ -116,7 +116,7 @@ class NoteSplashDebugState extends MusicBeatState
 					nameInputText.hasFocus = false;
 				
 				default:
-					trace('changed anim name to $text');
+					trace('Changed anim name to $text.');
 					config.anim = text;
 					curAnim = 1;
 					reloadAnims();

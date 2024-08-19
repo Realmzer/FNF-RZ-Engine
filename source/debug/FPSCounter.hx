@@ -16,6 +16,8 @@ class FPSCounter extends TextField
 	**/
 	public var currentFPS(default, null):Int;
 
+	public var framesCounter:Int;
+
 	/**
 		The current memory usage (WARNING: this is NOT your total program memory usage, rather it shows the garbage collector memory)
 	**/
@@ -26,6 +28,7 @@ class FPSCounter extends TextField
 	public function new(x:Float = 10, y:Float = 10, color:Int = 0x000000)
 	{
 		super();
+		framesCounter = 0;
 
 		this.x = x;
 		this.y = y;
@@ -51,6 +54,8 @@ class FPSCounter extends TextField
 			deltaTimeout = 0.0;
 			return;
 		}
+		
+		framesCounter++;
 
 		final now:Float = haxe.Timer.stamp() * 1000;
 		times.push(now);
@@ -62,11 +67,21 @@ class FPSCounter extends TextField
 	}
 
 	public dynamic function updateText():Void { // so people can override it in hscript
-		text = 'FPS: ${currentFPS}'
-		+ '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}';
+		text = 'FPS: ${currentFPS}';
+		text += '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}';
+		
+	//	if (ClientPrefs.data.showFramesRan)
+	//	text += '\nFrames: ${framesCounter}';
 
-		textColor = 0xFFFFFFFF;
+	//	if (ClientPrefs.data.showOSonFPS)
+	//	text += "\nOS: " + '${lime.system.System.platformLabel} ${lime.system.System.platformVersion}';
+
+			textColor = 0xFFFFFFFF;
+		if (currentFPS < FlxG.drawFramerate * 0.75)
+			textColor = 0xFFFFFB00;
 		if (currentFPS < FlxG.drawFramerate * 0.5)
+			textColor = 0xFFFF9900;
+		if (currentFPS < FlxG.drawFramerate * 0.25)
 			textColor = 0xFFFF0000;
 	}
 

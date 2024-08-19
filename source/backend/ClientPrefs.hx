@@ -93,6 +93,8 @@ import states.TitleState;
 	public var notesplashes:Bool = true;
 	public var oppstrumstatic:Bool = false;
 	public var playerstrumstatic:Bool = false;
+	public var showFramesRan:Bool = true;
+	public var showOSonFPS:Bool = true;
 }
 
 class ClientPrefs {

@@ -53,7 +53,7 @@ class Main extends Sprite
 	var game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
-		initialState: FlashingState, // initial game state
+		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 60, // default framerate
 		skipSplash: true, // if the default flixel splash screen should be skipped
@@ -102,7 +102,7 @@ class Main extends Sprite
 		CppAPI.darkMode();
 		#end
 
-			trace('Game Successfully Started!');
+			trace('Game Started.');
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
@@ -155,7 +155,7 @@ class Main extends Sprite
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 
-		#if !mobile
+
 		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -163,7 +163,7 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
-		#end
+		
 
 		#if linux
 		var icon = Image.fromFile("icon.png");
