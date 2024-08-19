@@ -426,7 +426,7 @@ class PlayState extends MusicBeatState
 				#end
 
 				#if HSCRIPT_ALLOWED
-				if(file.toLowerCase().endsWith('.hx'))
+				if(file.toLowerCase().endsWith('.hx') || file.toLowerCase().endsWith('hscript') || file.toLowerCase().endsWith('hsc') || file.toLowerCase().endsWith('hxs'))
 					initHScript(folder + file);
 				#end
 			}
@@ -620,7 +620,7 @@ class PlayState extends MusicBeatState
 				#end
 
 				#if HSCRIPT_ALLOWED
-				if(file.toLowerCase().endsWith('.hx'))
+				if(file.toLowerCase().endsWith('.hx') || file.toLowerCase().endsWith('hscript') || file.toLowerCase().endsWith('hsc') || file.toLowerCase().endsWith('hxs'))
 					initHScript(folder + file);
 				#end
 			}

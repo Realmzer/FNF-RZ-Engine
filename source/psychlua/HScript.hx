@@ -3,6 +3,7 @@ package psychlua;
 import flixel.FlxBasic;
 import objects.Character;
 import objects.*;
+import backend.*;
 import psychlua.LuaUtils;
 import psychlua.CustomSubstate;
 
@@ -87,10 +88,16 @@ class HScript extends SScript
 		// Some very commonly used classes
 		set('FlxG', flixel.FlxG);
 		set('FlxBasic', flixel.FlxBasic);
+		set('FlxText', flixel.text.FlxText);
+		set('FlxBitmapText', flixel.text.FlxBitmapText);
+		set('FlxBitmapFont', flixel.text.FlxBitmapFont);
+		set('FlxTextBorderStyle', flixel.text.FlxTextBorderStyle);
+		set('FlxTextFormat', flixel.text.FlxTextFormat);
 		set('FlxGradient', flixel.util.FlxGradient);
 		set('FlxDestroyUtil', flixel.util.FlxDestroyUtil);
 		set('FlxSpriteUtil', flixel.util.FlxSpriteUtil);
 		set('FlxStringUtil', flixel.util.FlxStringUtil);
+		set('FlxColorTransformUtil', flixel.util.FlxColorTransformUtil);
 		set('FlxMath', flixel.math.FlxMath);
 		set('FlxMatrix', flixel.math.FlxMatrix);
 		set('FlxRandom', flixel.math.FlxRandom);
@@ -102,6 +109,17 @@ class HScript extends SScript
 		set('FlxTimer', flixel.util.FlxTimer);
 		set('FlxTween', flixel.tweens.FlxTween);
 		set('FlxEase', flixel.tweens.FlxEase);
+		set('AngleTween', flixel.tweens.misc.AngleTween);
+		set('ColorTween', flixel.tweens.misc.ColorTween);
+		set('NumTween',   flixel.tweens.misc.NumTween);
+		set('FlxSave', flixel.util.FlxSave);
+		set('FlxBackdrop', flixel.addons.display.FlxBackdrop);
+		set('FlxGridOverlay', flixel.addons.display.FlxGridOverlay);
+		set('FlxInputText', flixel.addons.ui.FlxInputText);
+		set('FlxSlider', flixel.addons.ui.FlxSlider);
+		set('FlxUIDropDownMenu', flixel.addons.ui.FlxUIDropDownMenu);
+		set('FlxUIInputText', flixel.addons.ui.FlxUIInputText);
+		set('FlxButton', flixel.ui.FlxButton);
 		set('FlxColor', CustomFlxColor);
 		set('Countdown', backend.BaseStage.Countdown);
 		set('PlayState', PlayState);
@@ -115,7 +133,6 @@ class HScript extends SScript
 		set('Rating', Rating);
 		set('Section', Section);
 		set('Song', Song);
-		set('SpectralAnalyzerEx', SpectralAnalyzerEx);
 		#if ACHIEVEMENTS_ALLOWED
 		set('Achievements', Achievements);
 		#end
@@ -147,7 +164,8 @@ class HScript extends SScript
 		set('IniUtil', IniUtil);
 		set('SortedArrayUtil', SortedArrayUtil);
 		set('FileAttributeWrapper', FileAttributeWrapper);
-		set('Vector3', math.Vector3);
+		set('Vector3', backend.math.Vector3);
+		set('VectorHelpers', backend.math.VectorHelpers);
 
 
 		// Functions & Variables

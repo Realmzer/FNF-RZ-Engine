@@ -56,6 +56,7 @@ import backend.Conductor;
 import backend.BaseStage;
 import backend.Difficulty;
 import backend.Mods;
+//import backend.Language;
 
 // Backend Utils
 import backend.utils.BitmapUtil;
@@ -97,6 +98,9 @@ import objects.BGSprite;
 
 import states.PlayState;
 import states.LoadingState;
+
+import backend.math.Vector3;
+import backend.math.VectorHelpers;
 
 #if flxanimate
 import flxanimate.*;
