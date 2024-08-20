@@ -13,12 +13,12 @@
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": 5.6.1
+      "version": "5.6.1"
     },
     {
       "name": "flixel-addons",
       "type": "haxelib",
-      "version": 3.2.2
+      "version": "3.2.2"
     },
     {
       "name": "flixel-tools",
@@ -38,7 +38,7 @@
     {
       "name": "SScript",
       "type": "haxelib",
-      "version": 7.7.0
+      "version": "7.7.0"
     },
     {
       "name": "hxcpp-debug-server",
@@ -48,12 +48,17 @@
     {
       "name": "tjson",
       "type": "haxelib",
-      "version": 1.4.0
+      "version": "1.4.0"
     },
     {
-      "name": "UnRAR",
+      "name": "unrar",
       "type": "haxelib",
-      "version": null
+      "version": "1.0.0"
+    },
+    {
+      "name": "away3d",
+      "type": "haxelib",
+      "version": "5.0.9"
     },
     {
       "name": "markdown",

@@ -3,6 +3,9 @@ package;
 #if android
 import android.content.Context;
 #end
+#if AWAY_TEST
+import states.stages.AwayStage;
+#end
 
 import debug.FPSCounter;
 import backend.Highscore;
@@ -63,6 +66,9 @@ class Main extends Sprite
 	public static var instance:Main;
 
 	public static var fpsVar:FPSCounter;
+	#if AWAY_TEST
+	public static var stage3D:AwayStage;
+	#end
 
 	public static var noTerminalColor:Bool = false;
 
@@ -148,6 +154,10 @@ class Main extends Sprite
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
 	
+		#if AWAY_TEST
+		addChild(stage3D = new AwayStage());
+		#end
+
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
@@ -182,10 +192,10 @@ class Main extends Sprite
 		FlxG.keys.preventDefaultKeys = [TAB];
 		#end
 
-		
-		#if CRASH_HANDLER
+	
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
+		//internal c++ exceptions
+		untyped __global__.__hxcpp_set_critical_error_handler(onCrash);
 
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();

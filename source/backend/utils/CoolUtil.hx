@@ -253,9 +253,33 @@ class CoolUtil
 		return Math.max(min, Math.min(max, value));
 	}
 
+	public static function dashToSpace(string:String):String
+		{
+			return string.replace("-", " ");
+		}
+	
+
 	inline public static function clamp(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));
 	}
+
+	public static function spaceToDash(string:String):String
+		{
+			return string.replace(" ", "-");
+		}
+	
+		public static function swapSpaceDash(string:String):String
+		{
+			return StringTools.contains(string, '-') ? dashToSpace(string) : spaceToDash(string);
+		}
+
+		public static var lerpSnap:Bool = false;
+		public static function fakeLerp(val1:Float, val2:Float, ratio:Float) {
+			if (lerpSnap)
+				return FlxMath.lerp(val1, val2, 1);
+			return FlxMath.lerp(val1, val2, ratio);
+		}
+	
 
 	
 

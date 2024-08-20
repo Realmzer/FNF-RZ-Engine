@@ -111,6 +111,7 @@
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
 	<haxelib name="UnRAR" />
+	<haxelib name="away3d" />
 	<haxelib name="markdown"/>
 
 	<!-- Disable Discord IO Thread -->
