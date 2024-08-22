@@ -38,6 +38,13 @@ import android.os.BatteryManager as AndroidBatteryManager;
 #end
 */
 
+//3D shit
+//import away3d.core.managers.Stage3DProxy;
+//import flx3D.Flx3DUtil;
+//import flx3D.FlxView3D;
+//import openfl.display3D.utils.UInt8Buff;
+//import openfl.display3D.Context3D;
+
 #if sys
 import sys.*;
 import sys.io.*;

@@ -34,6 +34,7 @@
 
 	<define name="VIDEOS_ALLOWED" if="windows || linux || android || ios || mobile" unless="32bits"/>
 	<define name="RAR_SUPPORTED" if="windows  || linux || android || ios" unless="hl" />
+	<define name="3D_ALLOWED"/>
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
