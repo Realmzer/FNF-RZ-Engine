@@ -70,7 +70,7 @@ class MusicPlayer extends FlxGroup
 		}
 
 		progressBar = new FlxBar(timeTxt.x, timeTxt.y + timeTxt.height, LEFT_TO_RIGHT, Std.int(timeTxt.width), 8, null, "", 0, Math.POSITIVE_INFINITY);
-		progressBar.createFilledBar(FlxColor.WHITE, FlxColor.BLACK);
+		progressBar.createFilledBar(FlxColor.BLACK, FlxColor.WHITE);
 		add(progressBar);
 
 		playbackTxt = new FlxText(FlxG.width * 0.6, 20, 0, "", 32);
@@ -90,9 +90,9 @@ class MusicPlayer extends FlxGroup
 		}
 
 		if (paused && !wasPlaying)
-			songTxt.text = 'PLAYING: ' + instance.songs[FreeplayState.curSelected].songName + ' (PAUSED)';
+			songTxt.text = 'Playing: ' + instance.songs[FreeplayState.curSelected].songName + ' (PAUSED)';
 		else
-			songTxt.text = 'PLAYING: ' + instance.songs[FreeplayState.curSelected].songName;
+			songTxt.text = 'Playing: ' + instance.songs[FreeplayState.curSelected].songName;
 
 		positionSong();
 
@@ -357,10 +357,10 @@ class MusicPlayer extends FlxGroup
 	function set_playbackRate(value:Float):Float 
 	{
 		var value = FlxMath.roundDecimal(value, 2);
-		if (value > 3)
-			value = 3;
-		else if (value <= 0.25)
-			value = 0.25;
+		if (value > 5)
+			value = 5;
+		else if (value <= 0)
+			value = 0;
 		return playbackRate = value;
 	}
 }
