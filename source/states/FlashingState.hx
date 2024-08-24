@@ -26,7 +26,7 @@ class FlashingState extends MusicBeatState
 			This game contains some flashing lights!\n
 			Press ENTER to disable them now or go to options menu.\n
 			Press ESCAPE/ESC to ignore this message.\n
-			You've been warned!",
+			You have been warned!",
 			32);
 		warnText.setFormat("VCR OSD Mono", 32, CENTER);
 	//	warnText.screenCenter(Y);

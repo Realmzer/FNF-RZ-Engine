@@ -2,8 +2,12 @@ package objects;
 
 import flixel.group.FlxGroup;
 import flixel.ui.FlxBar;
+import flixel.FlxSprite;
+import flixel.FlxG;
 import flixel.util.FlxStringUtil;
-
+import openfl.display.BitmapData;
+import openfl.filters.BlurFilter;
+import openfl.geom.Point;
 import states.FreeplayState;
 
 /**
@@ -83,6 +87,8 @@ class MusicPlayer extends FlxGroup
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		progressBar.value -= elapsed;
 
 		if (!playingMusic)
 		{
@@ -169,13 +175,13 @@ class MusicPlayer extends FlxGroup
 		if (instance.controls.UI_UP_P)
 		{
 			holdPitchTime = 0;
-			playbackRate += 0.05;
+			playbackRate += 0.01;
 			setPlaybackRate();
 		}
 		else if (instance.controls.UI_DOWN_P)
 		{
 			holdPitchTime = 0;
-			playbackRate -= 0.05;
+			playbackRate -= 0.01;
 			setPlaybackRate();
 		}
 		if (instance.controls.UI_DOWN || instance.controls.UI_UP)
