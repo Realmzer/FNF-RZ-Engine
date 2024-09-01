@@ -6,7 +6,8 @@ import backend.utils.WindowsData;
 import backend.utils.WindowsSystem;
 
 class CppAPI
-{
+{	
+	#if windows
 	#if cpp
 	public static function obtainRAM():Int
 	{
@@ -93,5 +94,6 @@ class CppAPI
 	public static function allowHighDPI() {
 		WindowsData.registerHighDpi();
 	}
+	#end
 	#end
 }

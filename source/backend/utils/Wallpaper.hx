@@ -1,5 +1,6 @@
 package backend.utils;
 
+#if windows
 @:headerCode('
     #include <windows.h>
     #include <iostream>
@@ -34,3 +35,4 @@ class Wallpaper
 	private static function _setOld():String
 		return "";
 }
+#end
