@@ -114,7 +114,6 @@ import flxanimate.*;
 //import flxanimate.PsychFlxAnimate as FlxAnimate;
 #end
 
-import hxvlc.flixel.*;
 
 //Flixel
 import flixel.sound.FlxSound;

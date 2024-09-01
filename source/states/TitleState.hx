@@ -52,6 +52,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var updateBox:FlxSprite;
 	
 	var titleTextColors:Array<FlxColor> = [0xFF33FFFF, 0xFF3333CC];
 	var titleTextAlphas:Array<Float> = [1, .64];
@@ -158,7 +159,6 @@ class TitleState extends MusicBeatState
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
-		FlxG.mouse.visible = false;
 		#if FREEPLAY
 		MusicBeatState.switchState(new FreeplayState());
 		#elseif CHARTING
@@ -325,6 +325,36 @@ class TitleState extends MusicBeatState
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = ClientPrefs.data.antialiasing;
 
+		updateBox = new FlxSprite(1280, 200).loadGraphic(Paths.image('updatestufflol'));
+		if (!initialized && mustUpdate)
+		add(updateBox);
+		//if(!mustUpdate)
+		//updateBox.visible = false;
+	//	if(mustUpdate)
+		updateBox.alpha = 0;
+		updateBox.visible = true;
+		updateBox.scale.x = 0.3;
+		updateBox.scale.y = 0.3;
+		updateBox.updateHitbox();
+		updateBox.antialiasing = ClientPrefs.data.antialiasing;
+
+		if (!initialized && mustUpdate)
+		{
+		FlxTween.tween(updateBox, {x: 1050, alpha: 1}, 2.5, {
+			ease: FlxEase.expoInOut,
+			onComplete: function(twn:FlxTween) {
+			}
+		});
+
+		new FlxTimer().start(5.5, function (tmr:FlxTimer) {
+			FlxTween.tween(updateBox, {x: 1280, alpha: 0}, 2.5, {
+				ease: FlxEase.expoInOut,
+				onComplete: function(twn:FlxTween) {
+				}
+			});
+		});
+	}
+
 		if (initialized)
 			skipIntro();
 		else
@@ -375,6 +405,23 @@ class TitleState extends MusicBeatState
 			}
 		}
 		#end
+
+		var canClick:Bool = true;
+		var usingMouse:Bool = false;
+
+		FlxG.mouse.visible = true;
+
+		//if (FlxG.mouse.overlaps(updateBox))
+			//{
+			//	if(canClick)
+			//	{
+			//		usingMouse = true;
+			//	}
+			//		if(FlxG.mouse.pressed && canClick && FlxG.mouse.overlaps(updateBox))
+			//	{
+			//		MusicBeatState.switchState(new OutdatedState());
+			//	}
+			//	}
 
 		#if FLX_PITCH
 		if (FlxG.keys.pressed.UP) FlxG.sound.music.pitch += 0.5 * elapsed;
