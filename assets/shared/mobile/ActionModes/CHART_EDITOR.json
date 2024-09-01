@@ -30,7 +30,7 @@
     {
       "button": "buttonC",
       "graphic": "c",
-      "x": 896,
+      "x": 1022,
       "y": 587,
       "width": 132,
       "height": 125,
@@ -46,19 +46,10 @@
       "color": "0x4A35B9"
     },
     {
-      "button": "buttonB",
-      "graphic": "b",
-      "x": 1022,
-      "y": 587,
-      "width": 132,
-      "height": 125,
-      "color": "0xFFCB00"
-    },
-    {
       "button": "buttonZ",
       "graphic": "z",
-      "x": 1148,
-      "y": 463,
+      "x": 896,
+      "y": 587,
       "width": 132,
       "height": 125,
       "color": "0xCCB98E"
@@ -112,7 +103,7 @@
       "button": "buttonH",
       "graphic": "h",
       "x": 1148,
-      "y": 214,
+      "y": 463,
       "width": 132,
       "height": 125,
       "color": "0xF3A505"

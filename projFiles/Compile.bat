@@ -74,8 +74,11 @@ pause >nul
 :compWindows
 title Compiler - Compiling Windows
 echo Compiling For Windows
+echo This could take a while depending on your hardware.
 haxelib run lime test windows
-echo ---
+echo ----------------
+echo Script finished!
+echo ----------------
 echo 1 - Close the script
 echo 2 - Go back to platform selection
 set /p menu=Type option:
@@ -85,8 +88,11 @@ if "%menu%"=="2" goto Prompt
 :compMac
 title Compiler - Compiling Mac
 echo Compiling For Mac
-haxelib run lime test mac
-echo ---
+echo This could take a while depending on your hardware.
+haxelib run lime build mac
+echo ----------------
+echo Script finished!
+echo ----------------
 echo 1 - Close the script
 echo 2 - Go back to platform selection
 set /p menu=Type option:
@@ -96,8 +102,11 @@ if "%menu%"=="2" goto Prompt
 :compLinux
 title Compiler - Compiling Linux
 echo Compiling For Linux
-haxelib run lime test linux
-echo ---
+echo This could take a while depending on your hardware.
+haxelib run lime build linux
+echo ----------------
+echo Script finished!
+echo ----------------
 echo 1 - Close the script
 echo 2 - Go back to platform selection
 set /p menu=Type option:
@@ -107,8 +116,11 @@ if "%menu%"=="2" goto Prompt
 :compAndroid
 title Compiler - Compiling Android
 echo Compiling For Android
+echo This could take a while depending on your hardware.
 haxelib run lime test android
-echo ---
+echo ----------------
+echo Script finished!
+echo ----------------
 echo 1 - Close the script
 echo 2 - Go back to platform selection
 set /p menu=Type option:
@@ -118,8 +130,11 @@ if "%menu%"=="2" goto Prompt
 :compIOS
 title Compiler - Compiling IOS
 echo Compiling For IOS
-haxelib run lime test ios
-echo ---
+echo This could take a while depending on your hardware.
+haxelib run lime build ios
+echo ----------------
+echo Script finished!
+echo ----------------
 echo 1 - Close the script
 echo 2 - Go back to platform selection
 set /p menu=Type option:
@@ -129,8 +144,11 @@ if "%menu%"=="2" goto Prompt
 :compCPP
 title Compiler - Compiling CPP
 echo Compiling For CPP
+echo This could take a while depending on your hardware.
 haxelib run lime test cpp
-echo ---
+echo ----------------
+echo Script finished!
+echo ----------------
 echo 1 - Close the script
 echo 2 - Go back to platform selection
 set /p menu=Type option:

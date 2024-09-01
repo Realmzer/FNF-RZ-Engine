@@ -48,7 +48,8 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" resizable="false" allow-shaders="true" require-shaders="true" allow-high-dpi="true" />
+
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -115,6 +116,10 @@
 	<haxelib name="away3d" />
 	<haxelib name="markdown"/>
 
+	
+	<!-- Android Specific-->
+	<haxelib name="extension-androidtools" if="android" />
+
 	<!-- Disable Discord IO Thread -->
 	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
 	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
@@ -122,6 +127,9 @@
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
 	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
+
+	
+	<haxedef name="openfl_dpi_aware" if="openfl_dpi_aware" />
 	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
@@ -158,13 +166,22 @@
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
 	
-	<!--Used for Izzy Engine's crash handler-->
-	<haxedef name="HXCPP_CHECK_POINTER" />
-	<haxedef name="HXCPP_STACK_LINE"  />
-	<haxedef name="HXCPP_STACK_TRACE" />
+	<haxedef name='no-inline' if="html5"/>
 
+	<section if="cpp">
+		<haxedef name="HXCPP_CHECK_POINTER" />
+		<haxedef name="HXCPP_STACK_LINE" />
+		<haxedef name="HXCPP_STACK_TRACE" />
+		<haxedef name="HXCPP_CATCH_SEGV" />
+	</section>
 	<!--Disable deprecated warnings-->
 	<haxedef name='no-deprecation-warnings' />
+
+	<!--Certificate-->
+	<certificate path="key.keystore" password="rzengine" alias="rzengineport" alias-password="rzengine" if="android" unless="debug" />
+
+	<!--Avoid memory leaks with for loops in HScript-->
+	<haxedef name="loop_unroll_max_cost" value="25" />
 
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
@@ -174,7 +191,7 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 
-	<assets path='projFiles/icons/iconOG.png' rename='icon.png' if="linux" /> />
+	<assets path='projFiles/icons/iconOG.png' rename='icon.png' if="linux" />
 	
 	<icon path="projFiles/icons/icon16.png" size='16'/>
 	<icon path="projFiles/icons/icon32.png" size='32'/>

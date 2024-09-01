@@ -89,15 +89,6 @@
       "width": 132,
       "height": 125,
       "color": "0xFF0000"
-    },
-    {
-      "button": "buttonG",
-      "graphic": "g",
-      "x": 644,
-      "y": 467,
-      "width": 132,
-      "height": 125,
-      "color": "0xCAC4B0"
     }
   ]
 }
