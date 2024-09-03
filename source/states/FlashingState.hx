@@ -15,6 +15,8 @@ class FlashingState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+		FlxG.save.bind('funkin', CoolUtil.getSavePath());
+		ClientPrefs.loadPrefs();
 
 		super.create();
 

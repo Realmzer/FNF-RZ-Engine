@@ -143,23 +143,29 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool');
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
-	
-/*
-		var option:Option = new Option('Add Frame Counter',
-			'If checked, adds a frame counter that shows how much frames\n the game has been running for.',
-			'showFramesRan',
-			'bool');
-		addOption(option);
-		option.onChange = onChangeFPSCounter;
 
-		var option:Option = new Option('Add Current OS to FPS Counter',
+	//	var option:Option = new Option('Add Frame Counter',
+		//	'If checked, adds a frame counter that shows how much frames\n the game has been running for.',
+		//	'showFramesRan',
+		//	'bool');
+	//	addOption(option);
+	//	option.onChange = onChangeFPSCounter;
+
+		var option:Option = new Option('Add Current OS',
 			'If checked, adds a OS indicator to the FPS Counter.',
 			'showOSonFPS',
 			'bool');
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
+
+		//var option:Option = new Option('Clock',
+		//	'If unchecked, hides the clock.',
+		//	'showClock',
+		//	'bool');
+	//	addOption(option);
+	//	option.onChange = onChangeClock;
 		
-*/		
+		
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
 			'pauseMusic',
@@ -254,4 +260,10 @@ class VisualsUISubState extends BaseOptionsMenu
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = ClientPrefs.data.showFPS;
 	}
+
+	//function onChangeClock()
+	//{
+	//	if(Main.clockVar != null)
+	//		Main.clockVar.visible = ClientPrefs.data.showClock;
+	//}
 }

@@ -87,14 +87,14 @@ import states.TitleState;
 	public var safeFrames:Float = 10;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
-
 	public var smoothBar:Bool = true;
 	public var noratings:Bool = false;
 	public var notesplashes:Bool = true;
 	public var oppstrumstatic:Bool = false;
 	public var playerstrumstatic:Bool = false;
-	public var showFramesRan:Bool = true;
-	public var showOSonFPS:Bool = true;
+	public var showFramesRan:Bool = false;
+	public var showOSonFPS:Bool = false;
+	public var showClock:Bool = false;
 }
 
 class ClientPrefs {

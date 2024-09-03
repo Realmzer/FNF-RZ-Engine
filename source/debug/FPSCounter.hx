@@ -71,11 +71,11 @@ class FPSCounter extends TextField
 		text += '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}';
 		//text += '\nTime: ${Date.now()}';
 		
-	//	if (ClientPrefs.data.showFramesRan)
-	//	text += '\nFrames: ${framesCounter}';
+		//if (ClientPrefs.data.showFramesRan)
+		//text += '\nFrames: ${framesCounter}';
 
-	//	if (ClientPrefs.data.showOSonFPS)
-	//	text += "\nOS: " + '${lime.system.System.platformLabel} ${lime.system.System.platformVersion}';
+		if (ClientPrefs.data.showOSonFPS)
+		text += "\nOS: " + '${lime.system.System.platformLabel} ${lime.system.System.platformVersion}';
 
 			textColor = 0xFFFFFFFF;
 		if (currentFPS < FlxG.drawFramerate * 0.75)
