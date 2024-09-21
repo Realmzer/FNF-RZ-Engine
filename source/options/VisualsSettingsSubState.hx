@@ -94,7 +94,7 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 			'If checked, makes it so the botplay text doesnt pulse.',
 			'staticCpuTxt',
 			'bool');
-		//addOption(option);
+		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",

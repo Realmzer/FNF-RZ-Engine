@@ -45,6 +45,9 @@ class MainMenuState extends MusicBeatState
 		#end
 		Mods.loadTopMod();
 
+		if (FlxG.sound.music.pitch < 1 || FlxG.sound.music.pitch > 1)
+			FlxTween.tween(FlxG.sound.music, {pitch: 1}, 1.5);
+
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);

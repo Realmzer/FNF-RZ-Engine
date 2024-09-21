@@ -85,6 +85,7 @@ import states.TitleState;
 	public var showFramesRan:Bool = false;
 	public var showOSonFPS:Bool = false;
 	public var showClock:Bool = false;
+	public var staticCpuTxt:Bool = false;
 }
 
 class ClientPrefs {

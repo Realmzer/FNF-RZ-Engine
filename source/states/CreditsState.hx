@@ -19,6 +19,9 @@ class CreditsState extends MusicBeatState
 
 	override function create()
 	{
+		Paths.clearStoredMemory();
+		Paths.clearUnusedMemory();
+
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -38,6 +41,10 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['RZ Engine Team'],
+			["Realmzer",			 "realm",			"Main Programmer of RZ Engine.",								 "https://x.com/realmzerplus",		    "d14bff"],
+			["Codename Engine Team", "face",            "I used some code from them",                                    "https://x.com/fnfcodenameeg",         "53b5e3"],
+			[''],
 			["Psych Engine Team"],
 			["Shadow Mario",		"shadowmario",		"Main Programmer and Head of Psych Engine",					"https://ko-fi.com/shadowmario",	"444444"],
 			["Riveren",				"riveren",			"Main Artist/Animator of Psych Engine",						"https://x.com/riverennn",			"14967B"],

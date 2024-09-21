@@ -272,6 +272,13 @@ class PlayState extends MusicBeatState
 		if(FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
+		
+		inline Paths.clearStoredMemory();
+
+		#if sys
+		openfl.system.System.gc();
+		#end
+
 		// Gameplay settings
 		healthGain = ClientPrefs.getGameplaySetting('healthgain');
 		healthLoss = ClientPrefs.getGameplaySetting('healthloss');
@@ -1650,7 +1657,7 @@ class PlayState extends MusicBeatState
 		setOnScripts('curDecStep', curDecStep);
 		setOnScripts('curDecBeat', curDecBeat);
 
-		if(botplayTxt != null && botplayTxt.visible) {
+		if(botplayTxt != null && botplayTxt.visible && !ClientPrefs.data.staticCpuTxt) {
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}

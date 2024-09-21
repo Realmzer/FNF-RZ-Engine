@@ -14,6 +14,7 @@ import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 
 import shaders.ColorSwap;
+import shaders.TitleOutline;
 
 import states.StoryMenuState;
 import states.OutdatedState;
@@ -148,6 +149,7 @@ class TitleState extends MusicBeatState
 	}
 
 	var logoBl:FlxSprite;
+	var outlineShaderShit:TitleOutline;
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
@@ -376,6 +378,37 @@ class TitleState extends MusicBeatState
 			}
 		}
 		#end
+
+		#if FLX_PITCH
+		if (FlxG.keys.pressed.UP) FlxG.sound.music.pitch += 0.5 * elapsed;
+	
+		if (FlxG.keys.pressed.DOWN) FlxG.sound.music.pitch -= 0.5 * elapsed;
+		#end
+	
+		#if desktop
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+		trace('Exiting...');
+		FlxTween.tween(FlxG.camera, {alpha: 0}, 3, {onComplete: e -> Sys.exit(0)});
+		FlxG.sound.music.fadeOut(3);
+		FlxTween.tween(FlxG.sound.music, {pitch: 0}, 3);
+		//FlxTween.tween(Lib.application.window, {width: 150, height: 150}, 3, {ease: FlxEase.expoInOut});
+		}
+		#end
+
+		if (FlxG.keys.justPressed.I)
+			{
+			  FlxTween.tween(outlineShaderShit, {funnyX: 50, funnyY: 50}, 0.6, {ease: FlxEase.quartOut});
+			}
+			if (FlxG.keys.pressed.D) outlineShaderShit.funnyX += 1;
+			// outlineShaderShit.xPos.value[0] += 1;
+		
+			if (FlxG.keys.justPressed.Y)
+			{
+			  FlxTween.cancelTweensOf(FlxG.stage.window, ['x', 'y']);
+			  FlxTween.tween(FlxG.stage.window, {x: FlxG.stage.window.x + 300}, 1.4, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.35});
+			  FlxTween.tween(FlxG.stage.window, {y: FlxG.stage.window.y + 100}, 0.7, {ease: FlxEase.quadInOut, type: PINGPONG});
+			}
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
