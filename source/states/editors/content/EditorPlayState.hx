@@ -104,11 +104,11 @@ class EditorPlayState extends MusicBeatSubstate
 		add(comboGroup);
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
-		//if(ClientPrefs.data.notesplashes)
-		//	{
+		if(ClientPrefs.data.notesplashes)
+			{
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
-		//	}
+			}
 
 
 		if(ClientPrefs.data.notesplashes)
@@ -321,7 +321,7 @@ class EditorPlayState extends MusicBeatSubstate
 			if(note == null || note.strumTime < startPos) continue;
 
 			var idx: Int = _noteList.indexOf(note);
-			if (idx != 0) {
+			if (idx != 0 && !ClientPrefs.data.ghostNotes) {
 				// CLEAR ANY POSSIBLE GHOST NOTES
 				for (evilNote in unspawnNotes) {
 					var matches: Bool = note.noteData == evilNote.noteData && note.mustPress == evilNote.mustPress && note.noteType == evilNote.noteType;
@@ -512,7 +512,7 @@ class EditorPlayState extends MusicBeatSubstate
 		note.rating = daRating.name;
 		score = daRating.score;
 
-		if(daRating.noteSplash && !note.noteSplashData.disabled)
+		if(daRating.noteSplash && !note.noteSplashData.disabled && ClientPrefs.data.notesplashes)
 			spawnNoteSplashOnNote(note);
 
 		if(!note.ratingDisabled)
@@ -790,7 +790,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if(note.hitCausesMiss) {
 			noteMiss(note);
-			if(!note.noteSplashData.disabled && !note.isSustainNote)
+			if(!note.noteSplashData.disabled && !note.isSustainNote && ClientPrefs.data.notesplashes)
 				spawnNoteSplashOnNote(note);
 
 			if (!note.isSustainNote)
@@ -872,7 +872,7 @@ class EditorPlayState extends MusicBeatSubstate
 	function spawnNoteSplashOnNote(note:Note) {
 		if(note != null) {
 			var strum:StrumNote = playerStrums.members[note.noteData];
-			if(strum != null)
+			if(strum != null && ClientPrefs.data.notesplashes)
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note, strum);
 		}
 	}
@@ -880,9 +880,9 @@ class EditorPlayState extends MusicBeatSubstate
 	function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null, strum:StrumNote) {
 		var splash:NoteSplash = new NoteSplash();
 		splash.babyArrow = strum;
-		splash.spawnSplashNote(note);
 		if(ClientPrefs.data.notesplashes)
 			{
+		splash.spawnSplashNote(note);
 		grpNoteSplashes.add(splash);
 			}
 	}

@@ -1328,7 +1328,7 @@ class PlayState extends MusicBeatState
 
 				var gottaHitNote:Bool = (songNotes[1] < totalColumns);
 
-				if (i != 0) {
+				if (i != 0 && !ClientPrefs.data.ghostNotes) {
 					// CLEAR ANY POSSIBLE GHOST NOTES
 					for (evilNote in unspawnNotes) {
 						var matches: Bool = (noteColumn == evilNote.noteData && gottaHitNote == evilNote.mustPress && evilNote.noteType == noteType);
@@ -1416,6 +1416,7 @@ class PlayState extends MusicBeatState
 				oldNote = swagNote;
 			}
 		}
+		if(!ClientPrefs.data.ghostNotes)
 		trace('["${SONG.song.toUpperCase()}" CHART INFO]: Ghost Notes Cleared: $ghostNotesCaught');
 		for (event in songData.events) //Event Notes
 			for (i in 0...event[1].length)
@@ -2528,7 +2529,7 @@ class PlayState extends MusicBeatState
 		note.rating = daRating.name;
 		score = daRating.score;
 
-		if(daRating.noteSplash && !note.noteSplashData.disabled)
+		if(daRating.noteSplash && !note.noteSplashData.disabled && ClientPrefs.data.notesplashes)
 			spawnNoteSplashOnNote(note);
 
 		if(!practiceMode && !cpuControlled) {
@@ -3071,7 +3072,7 @@ class PlayState extends MusicBeatState
 			}
 
 			noteMiss(note);
-			if(!note.noteSplashData.disabled && !note.isSustainNote) spawnNoteSplashOnNote(note);
+			if(!note.noteSplashData.disabled && !note.isSustainNote && ClientPrefs.data.notesplashes) spawnNoteSplashOnNote(note);
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.goodNoteHit(note));
@@ -3089,7 +3090,7 @@ class PlayState extends MusicBeatState
 	public function spawnNoteSplashOnNote(note:Note) {
 		if(note != null) {
 			var strum:StrumNote = playerStrums.members[note.noteData];
-			if(strum != null)
+			if(strum != null && ClientPrefs.data.notesplashes)
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note, strum);
 		}
 	}
@@ -3097,8 +3098,11 @@ class PlayState extends MusicBeatState
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, note:Note, strum:StrumNote) {
 		var splash:NoteSplash = new NoteSplash();
 		splash.babyArrow = strum;
+		if (ClientPrefs.data.notesplashes)
+		{
 		splash.spawnSplashNote(note);
 		grpNoteSplashes.add(splash);
+		}
 	}
 
 	override function destroy() {

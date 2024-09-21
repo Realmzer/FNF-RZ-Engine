@@ -235,7 +235,7 @@ class Main extends Sprite
 		*/
 		// 
 		#if officialBuild
-		errMsg += "\nPlease report this error to the GitHub page: https://github.com/Realmzer/FNF-RZ-Engine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nPlease report this error to the GitHub page: https://github.com/Realmzer/FNF-RZ-Engine/issues\n\n> Crash Handler written by: sqirra-rng";
 		#end
 
 		if (!FileSystem.exists("./crash/"))
