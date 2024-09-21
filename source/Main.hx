@@ -3,13 +3,9 @@ package;
 #if android
 import android.content.Context;
 #end
-#if AWAY_TEST
-import states.stages.AwayStage;
-#end
 
 import debug.FPSCounter;
-//import debug.Clock;
-import backend.Highscore;
+
 import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -21,14 +17,6 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
-import states.*;
-//import mobile.backend.MobileScaleMode;
-import openfl.events.KeyboardEvent;
-import lime.system.System as LimeSystem;
-//import mobile.objects.MobileControls;
-#if mobile
-//import mobile.states.CopyState;
-#end
 
 #if linux
 import lime.graphics.Image;
@@ -41,9 +29,7 @@ import haxe.CallStack;
 import haxe.io.Path;
 #end
 
-#if desktop
-import cpp.vm.Gc;
-#end
+import backend.Highscore;
 
 #if linux
 @:cppInclude('./external/gamemode_client.h')
@@ -57,17 +43,17 @@ class Main extends Sprite
 	var game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
-		initialState: FlashingState, // initial game state
+		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 60, // default framerate
 		skipSplash: true, // if the default flixel splash screen should be skipped
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
+	public static var fpsVar:FPSCounter;
+
 	public static var instance:Main;
 
-	public static var fpsVar:FPSCounter;
-	//public static var clockVar:Clock;
 	#if AWAY_TEST
 	public static var stage3D:AwayStage;
 	#end
@@ -89,13 +75,12 @@ class Main extends Sprite
 
 		instance = this;
 
-		#if mobile
+		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
-		//StorageUtil.requestPermissions();
+		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		#elseif ios
+		Sys.setCwd(lime.system.System.applicationStorageDirectory);
 		#end
-		Sys.setCwd(StorageUtil.getStorageDirectory());
-		#end
-
 
 		#if windows //DPI AWARENESS BABY
 		@:functionCode("
@@ -106,18 +91,11 @@ class Main extends Sprite
 		")
 		#end
 
-		#if (DARK_MODE_WINDOW && !macro && windows)
+		#if (DARK_MODE_WINDOW && windows)
 		CppAPI.darkMode();
 		#end
 
 		trace('Game Started.');
-
-		// Credits to MAJigsaw77 (he's the og author for this code)
-		#if android
-		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
-		#elseif ios
-		Sys.setCwd(lime.system.System.applicationStorageDirectory);
-		#end
 
 		if (stage != null)
 		{
@@ -127,10 +105,10 @@ class Main extends Sprite
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
+		#if VIDEOS_ALLOWED
+		hxvlc.util.Handle.init(#if (hxvlc >= "1.8.0")  ['--no-lua'] #end);
+		#end
 	}
-
-	@:dox(hide)
-	public static var audioDisconnected:Bool = false;
 
 	private function init(?E:Event):Void
 	{
@@ -155,10 +133,15 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
-	
-		#if AWAY_TEST
-		addChild(stage3D = new AwayStage());
+
+		#if LUA_ALLOWED
+		Mods.pushGlobalMods();
 		#end
+		Mods.loadTopMod();
+
+		FlxG.save.bind('funkin', CoolUtil.getSavePath());
+
+		Highscore.load();
 
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
@@ -166,8 +149,7 @@ class Main extends Sprite
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
-
-
+		#if !mobile
 		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -175,7 +157,7 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
-		
+		#end
 
 		#if linux
 		var icon = Image.fromFile("icon.png");
@@ -187,30 +169,19 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#end
 
-		FlxG.game.focusLostFramerate = #if mobile 30 #else 60 #end;
-		#if web
-		FlxG.keys.preventDefaultKeys.push(TAB);
-		#else
+		FlxG.fixedTimestep = false;
+		FlxG.game.focusLostFramerate = 60;
 		FlxG.keys.preventDefaultKeys = [TAB];
-		#end
-
-	
+		
+		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		//internal c++ exceptions
-		untyped __global__.__hxcpp_set_critical_error_handler(onCrash);
+		#end
 
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
 		#end
-	//  MobileControls.initSave();
 
-		#if android FlxG.android.preventDefaultKeys = [BACK]; #end
-
-		#if mobile
-	//	LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver; 		
-	//	FlxG.scaleMode = new MobileScaleMode();
-		#end
-	// shader coords fix
+		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {
 		     if (FlxG.cameras != null) {
 			   for (cam in FlxG.cameras.list) {
@@ -223,8 +194,6 @@ class Main extends Sprite
 			resetSpriteCache(FlxG.game);
 		});
 	}
-
-	
 
 	static function resetSpriteCache(sprite:Sprite):Void {
 		@:privateAccess {
@@ -242,12 +211,11 @@ class Main extends Sprite
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
-		var operatingSys:String = Sys.systemName();
 
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "./crashlog/" + "RZEngine_" + dateNow + ".txt";
+		path = "./crash/" + "RZEngine_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{
@@ -260,10 +228,18 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/Realmzer/FNF-RealmEngine\n\n> Crash Handler written by: sqirra-rng \nDate: " + dateNow + "\nOS: " + operatingSys;
+		errMsg += "\nUncaught Error: " + e.error;
+		/*
+		 * remove if you're modding and want the crash log message to contain the link
+		 * please remember to actually modify the link for the github page to report the issues to.
+		*/
+		// 
+		#if officialBuild
+		errMsg += "\nPlease report this error to the GitHub page: https://github.com/Realmzer/FNF-RZ-Engine\n\n> Crash Handler written by: sqirra-rng";
+		#end
 
-		if (!FileSystem.exists("./crashlog/"))
-			FileSystem.createDirectory("./crashlog/");
+		if (!FileSystem.exists("./crash/"))
+			FileSystem.createDirectory("./crash/");
 
 		File.saveContent(path, errMsg + "\n");
 

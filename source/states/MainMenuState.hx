@@ -14,8 +14,8 @@ enum MainMenuColumn {
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = 'Unknown'; // This is used for Discord RPC
-	public static var rzEngineVersion:String = '0.1'; //This might also be used for Discord RPC
+	public static var psychEngineVersion:String = '1.0-prerelease'; // This is also used for Discord RPC
+	public static var rzEngineVersion:String = '0.1';
 	public static var curSelected:Int = 0;
 	public static var curColumn:MainMenuColumn = CENTER;
 	var allowMouse:Bool = true; //Turn this off to block mouse movement in menus
@@ -40,9 +40,6 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		Paths.clearStoredMemory();
-		Paths.clearUnusedMemory();
-
 		#if MODS_ALLOWED
 		Mods.pushGlobalMods();
 		#end
@@ -50,11 +47,8 @@ class MainMenuState extends MusicBeatState
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus - Main Menu", null);
+		DiscordClient.changePresence("In the Menus", null);
 		#end
-
-		if (FlxG.sound.music.pitch < 1 || FlxG.sound.music.pitch > 1)
-		FlxTween.tween(FlxG.sound.music, {pitch: 1}, 1.5);
 
 		persistentUpdate = persistentDraw = true;
 
@@ -68,7 +62,7 @@ class MainMenuState extends MusicBeatState
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
-		//add(camFollow);
+		add(camFollow);
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.antialiasing = ClientPrefs.data.antialiasing;
@@ -91,24 +85,24 @@ class MainMenuState extends MusicBeatState
 		}
 
 		if (leftOption != null)
-			leftItem = createMenuItem(leftOption, 60, 440);
+			leftItem = createMenuItem(leftOption, 60, 490);
 		if (rightOption != null)
 		{
-			rightItem = createMenuItem(rightOption, FlxG.width - 60, 440);
+			rightItem = createMenuItem(rightOption, FlxG.width - 60, 490);
 			rightItem.x -= rightItem.width;
 		}
 
 		var rzVer:FlxText = new FlxText(12, FlxG.height - 64, 0, "RZ Engine v" + rzEngineVersion, 12);
 		rzVer.scrollFactor.set();
-		rzVer.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		rzVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(rzVer);
 		var psychVer:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		psychVer.scrollFactor.set();
-		psychVer.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		psychVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(psychVer);
 		var fnfVer:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
 		fnfVer.scrollFactor.set();
-		fnfVer.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		fnfVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(fnfVer);
 		changeItem();
 
@@ -125,7 +119,7 @@ class MainMenuState extends MusicBeatState
 
 		super.create();
 
-		//FlxG.camera.follow(camFollow, null, 0.15);
+		FlxG.camera.follow(camFollow, null, 0.15);
 	}
 
 	function createMenuItem(name:String, x:Float, y:Float):FlxSprite
@@ -373,6 +367,6 @@ class MainMenuState extends MusicBeatState
 		}
 		selectedItem.animation.play('selected');
 		selectedItem.centerOffsets();
-		//camFollow.y = selectedItem.getGraphicMidpoint().y;
+		camFollow.y = selectedItem.getGraphicMidpoint().y;
 	}
 }

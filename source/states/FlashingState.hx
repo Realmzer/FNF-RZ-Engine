@@ -4,7 +4,6 @@ import flixel.FlxSubState;
 
 import flixel.effects.FlxFlicker;
 import lime.app.Application;
-import flixel.addons.transition.FlxTransitionableState;
 
 class FlashingState extends MusicBeatState
 {
@@ -13,29 +12,21 @@ class FlashingState extends MusicBeatState
 	var warnText:FlxText;
 	override function create()
 	{
-		Paths.clearStoredMemory();
-		Paths.clearUnusedMemory();
-		FlxG.save.bind('funkin', CoolUtil.getSavePath());
-		ClientPrefs.loadPrefs();
-
 		super.create();
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
-		warnText = new FlxText(-500, 125, FlxG.width,
-			"\nHey, watch out!\n
-			This game contains some flashing lights!\n
-			Press ENTER to disable them now or go to options menu.\n
-			Press ESCAPE/ESC to ignore this message.\n
-			You have been warned!",
+		warnText = new FlxText(0, 0, FlxG.width,
+			"Hey, watch out!\n
+			This Mod contains some flashing lights!\n
+			Press ENTER to disable them now or go to Options Menu.\n
+			Press ESCAPE to ignore this message.\n
+			You've been warned!",
 			32);
-		warnText.setFormat("VCR OSD Mono", 32, CENTER);
-	//	warnText.screenCenter(Y);
-		warnText.color = 0xFFFF4444;
+		warnText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
+		warnText.screenCenter(Y);
 		add(warnText);
-		warnText.alpha = 0;
-		FlxTween.tween(warnText, { x: 0, alpha: 1}, 1.5, {ease: FlxEase.elasticInOut});
 	}
 
 	override function update(elapsed:Float)
