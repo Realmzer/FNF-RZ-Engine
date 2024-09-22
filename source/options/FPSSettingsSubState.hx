@@ -51,7 +51,7 @@ class FPSSettingsSubState extends BaseOptionsMenu
         option.onChange = onChangeFPSCounter;
 
         var option:Option = new Option('Show Used VRAM',
-        'If checked, used VRAM will appear on the FPS Counter.',
+        'If checked, used VRAM will appear on the FPS Counter. \n This doesnt work on IGPUs.',
         'usedVramCounter',
         BOOL);
         addOption(option);
