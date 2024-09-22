@@ -119,6 +119,7 @@ class MainMenuState extends MusicBeatState
 		Achievements.reloadList();
 		#end
 		#end
+		
 
 		super.create();
 
