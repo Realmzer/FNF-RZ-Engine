@@ -44,14 +44,6 @@ class MemoryShit {
 	{
 		var memory = windowsObtainMemory();
 		if (memory == 0)
-			return Gc.memInfo(Gc.MEM_INFO_CURRENT); // gets used memory, including uncollected garbage (should be more accurate than System.totalMemory?)
-
-		return memory;
-	}
-	public static function obtainMemory():Dynamic
-	{
-		var memory = windowsObtainMemory();
-		if (memory == 0)
 		{
 			#if cpp
 			return Gc.memInfo(Gc.MEM_INFO_CURRENT); // gets used memory, including uncollected garbage (should be more accurate than System.totalMemory?)
