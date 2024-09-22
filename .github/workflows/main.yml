@@ -440,6 +440,7 @@ jobs:
          - name: Configure iOS
            run: |
             haxelib set hscript-Iris 1.1.0
+            haxelib set lime 8.1.2
             haxelib list
 
          - name: Building iOS
