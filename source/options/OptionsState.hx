@@ -62,6 +62,11 @@ class OptionsState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
+		var fpstext:FlxText = new FlxText(12, FlxG.height - 24, 0, "Press F to enter the FPS Visual Settings", 12);
+		fpstext.scrollFactor.set();
+		fpstext.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(fpstext);
+
 		for (num => option in options)
 		{
 			var optionText:Alphabet = new Alphabet(0, 0, Language.getPhrase('options_$option', option), true);
@@ -97,6 +102,9 @@ class OptionsState extends MusicBeatState
 			changeSelection(-1);
 		if (controls.UI_DOWN_P)
 			changeSelection(1);
+
+		if (FlxG.keys.pressed.F) 
+			openSubState(new options.FPSSettingsSubState());
 
 		if (controls.BACK)
 		{

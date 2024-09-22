@@ -15,13 +15,13 @@ class OptimizationsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Opponent Static Strums', // No more Strum Animations
-		"Keeps the opponent strums static. \n Disables Note Colors menu",
+		"Keeps the opponent strums static.",
 		'oppstrumstatic',
 		'bool');
 		addOption(option);
 
 		var option:Option = new Option('Player Static Strums', // No more Strum Animations
-		"Keeps the player strums static. \n Disables Note Colors menu",
+		"Keeps the player strums static.",
 		'playerstrumstatic',
 		'bool');
 		addOption(option);

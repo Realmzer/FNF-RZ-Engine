@@ -28,11 +28,12 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 
 		// options
 
-		var option:Option = new Option('Note Splashes', //No more splashy :)
+		var option:Option = new Option('Note Splashes', //No more splashy :
 		"If unchecked, disables note splashes.",
 		'notesplashes',
 		'bool');
 		addOption(option);
+		
 
 		
 		var noteSkins:Array<String> = Mods.mergeAllTextsNamed('images/noteSkins/list.txt');
@@ -146,13 +147,6 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		#end
-
-		var option:Option = new Option('Add Current OS',
-			'If checked, adds a OS indicator to the FPS Counter.',
-			'showOSonFPS',
-			'bool');
-		addOption(option);
-		option.onChange = onChangeFPSCounter;
 		
 		var option:Option = new Option('Pause Music:',
 			"What song do you prefer for the Pause Screen?",

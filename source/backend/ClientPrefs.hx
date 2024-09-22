@@ -82,11 +82,18 @@ import states.TitleState;
 	public var notesplashes:Bool = true;
 	public var oppstrumstatic:Bool = false;
 	public var playerstrumstatic:Bool = false;
-	public var showFramesRan:Bool = false;
-	public var showOSonFPS:Bool = false;
-	public var showClock:Bool = false;
 	public var staticCpuTxt:Bool = false;
 	public var ghostNotes:Bool = true;
+
+	// FPS Options
+	public var showOSonFPS:Bool = false;
+	public var showClock:Bool = false;
+	public var showFramesRan:Bool = false;
+	public var showPsyEngineVer:Bool = false;
+	public var showRZEngineVer:Bool = false;
+	public var showFNFEngineVer:Bool = false;
+	public var usedVramCounter:Bool = false;
+	public var showPeakMem:Bool = false;
 }
 
 class ClientPrefs {
@@ -116,7 +123,9 @@ class ClientPrefs {
 		'volume_down'	=> [NUMPADMINUS, MINUS],
 		
 		'debug_1'		=> [SEVEN],
-		'debug_2'		=> [EIGHT]
+		'debug_2'		=> [EIGHT],
+		
+		'screenshot' 	=> [F3]
 	];
 	public static var gamepadBinds:Map<String, Array<FlxGamepadInputID>> = [
 		'note_up'		=> [DPAD_UP, Y],

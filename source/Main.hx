@@ -139,9 +139,10 @@ class Main extends Sprite
 		#end
 		Mods.loadTopMod();
 
-		FlxG.save.bind('funkin', CoolUtil.getSavePath());
+		FlxG.save.bind('rzengine', CoolUtil.getSavePath());
 
 		Highscore.load();
+
 
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
