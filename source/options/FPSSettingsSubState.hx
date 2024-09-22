@@ -67,12 +67,12 @@ class FPSSettingsSubState extends BaseOptionsMenu
 		super();
 	}
 
-    #if !mobile
+    //#if !mobile
 	function onChangeFPSCounter()
 	{
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = ClientPrefs.data.showFPS;
 	}
-	#end
+	//#end
 
 }
