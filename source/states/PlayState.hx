@@ -247,11 +247,15 @@ class PlayState extends MusicBeatState
 	// Callbacks for stages
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
+	public static var nextReloadAll:Bool = false;
 
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
+		
+		if(nextReloadAll) Paths.clearUnusedMemory();
+		nextReloadAll = false;
 
 		startCallback = startCountdown;
 		endCallback = endSong;
