@@ -18,6 +18,7 @@ import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
 import objects.FunkinSoundTray;
+import states.*;
 
 #if linux
 import lime.graphics.Image;

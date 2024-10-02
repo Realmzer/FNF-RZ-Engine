@@ -5,6 +5,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.display.shapes.FlxShapeCircle;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepadInputID;
+import flixel.util.FlxGradient;
 import lime.system.Clipboard;
 import flixel.util.FlxGradient;
 import objects.StrumNote;
@@ -55,11 +56,20 @@ class NotesColorSubState extends MusicBeatSubstate
 		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFEA71FD;
-		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.data.antialiasing;
+		bg.color = 0xFFea71fd;
+		bg.updateHitbox();
+		bg.screenCenter();
 		add(bg);
 
+		var gradent:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		gradent.antialiasing = ClientPrefs.data.antialiasing;
+		gradent = FlxGradient.createGradientFlxSprite(FlxG.width, FlxG.height, [0xFFea71fd, 0xFFB15FFD], 90);
+		gradent.updateHitbox();
+		gradent.screenCenter();
+		add(gradent);
+		gradent.alpha = 0.65;
+		
 		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
 		grid.velocity.set(40, 40);
 		grid.alpha = 0;

@@ -255,6 +255,11 @@ class PlayState extends MusicBeatState
 		Paths.clearStoredMemory();
 		
 		if(nextReloadAll) Paths.clearUnusedMemory();
+		if(nextReloadAll)
+			{
+				Paths.clearUnusedMemory();
+				Language.reloadPhrases();
+			}
 		nextReloadAll = false;
 
 		startCallback = startCountdown;
@@ -3372,7 +3377,7 @@ class PlayState extends MusicBeatState
 			try
 			{
 				var callValue = script.call(funcToCall, args);
-				var myValue:Dynamic = callValue.signature;
+				var myValue:Dynamic = callValue.returnValue;
 
 				if((myValue == LuaUtils.Function_StopHScript || myValue == LuaUtils.Function_StopAll) && !excludeValues.contains(myValue) && !ignoreStops)
 				{

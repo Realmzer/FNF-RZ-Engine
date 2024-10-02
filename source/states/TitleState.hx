@@ -74,10 +74,14 @@ class TitleState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
-		ClientPrefs.loadPrefs();
-		Language.reloadPhrases();
 
 		super.create();
+
+		if(!initialized)
+			{
+				ClientPrefs.loadPrefs();
+				Language.reloadPhrases();
+			}
 		
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
@@ -136,15 +140,7 @@ class TitleState extends MusicBeatState
 		}
 		else
 		{
-			if (initialized)
-				startIntro();
-			else
-			{
-				new FlxTimer().start(1, function(tmr:FlxTimer)
-				{
-					startIntro();
-				});
-			}
+			startIntro();
 		}
 		#end
 	}

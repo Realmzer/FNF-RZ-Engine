@@ -2,6 +2,7 @@ package options;
 
 import states.MainMenuState;
 import backend.StageData;
+import flixel.util.FlxGradient;
 
 class OptionsState extends MusicBeatState
 {
@@ -55,9 +56,16 @@ class OptionsState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.color = 0xFFea71fd;
 		bg.updateHitbox();
-
 		bg.screenCenter();
 		add(bg);
+
+		var gradent:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		gradent.antialiasing = ClientPrefs.data.antialiasing;
+		gradent = FlxGradient.createGradientFlxSprite(FlxG.width, FlxG.height, [0xFFea71fd, 0xFFB15FFD], 90);
+		gradent.updateHitbox();
+		gradent.screenCenter();
+		add(gradent);
+		gradent.alpha = 0.65;
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
